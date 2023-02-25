@@ -9,4 +9,5 @@ wavelength <- data$Wavelength
 absorbance <- data$Absorbance
 
 #Create a plot using the plot() function. Pass the wavelength vector as the x-axis and the absorbance vector as the y-axis. You can also customize the plot by adding a title, axis labels, and changing the colors and line types. Here's an example:
-plot(wavelength, absorbance, type = "l", col = "blue", xlab = "Wavelength", ylab = "Absorbance", main = "Absorbance vs Wavelength")
+ggplot(data, aes(x = wavelength, y = absorbance)) +
+  geom_point()
