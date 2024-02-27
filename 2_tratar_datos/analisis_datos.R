@@ -35,5 +35,15 @@ attach(datoscel) #importante colocar esto para trabajar con los datos !!!!!!
 
 #pero tambien existen formas de analizar dos variables para saber si los tratamientos sirven
 #graficos de boxplot util para esta caso
+
+#guardar como imagen ir a Export y guardar como imagen y puedes modificar su tamaño
 boxplot(celulas ~ trat) #celulas vs trat, tratamiento 2 no recomendable por que tiene mas celulas cancerigenas
 #pero el tratamiento 1 es mas recomendable menos celulas cancerigenas
+#la mediana es la raya negra indica el 50% de los datos y los puntos significa los datos atipicos
+
+#ver estadistica inferencial- intervalos de confianza y pruebas de hipotesis
+#Estudiar LaTeX
+
+
+
+
