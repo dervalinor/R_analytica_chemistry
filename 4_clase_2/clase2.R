@@ -61,3 +61,14 @@ respuestas
 #Grafica de densidad de probabilidad
 
 plot(density(respuestas))
+tabla_diseno$respuestas = respuestas #añadir un nueva tabla
+tabla_diseno
+
+attach(tabla_diseno)
+
+#Ctr + A + ctrl + Enter - Copilar el codigo
+boxplot(respuestas ~ tratamientos, data = tabla_diseno, col = c("#2F8FE7", "#B849E0", "#49E0C6", "#70E049"), #midificar color de cada tratamiento
+        xlab = "Tratamientos", #cambiar nombre de los ejes
+        ylab = "Respuestas",
+        main = "Experimento simulado")
+#este es un analisis descriptivo
