@@ -28,3 +28,11 @@ tratamientos <- c("T1", "T2", "T3", "T4") #vector en R, c indicar un vector
 #cargar variable
 tratamientos
 
+#replicas de experimentos
+replicas = c(5, 5, 5, 5)
+replicas
+
+#diseño completamente aleatorizado
+?design.crd #ver manual de esta función
+design.crd()
+
