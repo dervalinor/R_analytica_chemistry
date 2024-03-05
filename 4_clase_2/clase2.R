@@ -20,8 +20,8 @@
 #install.packages("agricolae")
 
 #verificar paquetes
-require(agricolae)
-#library(agricolae)
+#require(agricolae)
+library(agricolae) #importante cargar esto para correr el codigo
 tratamientos <- c("T1", "T2", "T3", "T4") #vector en R, c indicar un vector
 #VER VARIABLES EN R
 
@@ -34,5 +34,30 @@ replicas
 
 #diseño completamente aleatorizado
 ?design.crd #ver manual de esta función
-design.crd()
+design.crd(tratamientos, replicas) #nos da tratamientos y replicas aleatorias 
 
+#impotante guardar la tabla usar seed como id
+#importante guardar matrix de diseño
+design.crd(tratamientos, replicas, seed = 20)
+
+#leer numeros: 101 - repolicar 1 del tratamiento 1, 103 replica 1 del tratamiento 3
+
+#Ahora debemos tomar observaciones
+#TRAER UN EXPERIMENTO DE UNA CLASE !!!!
+
+#Guardar tabla
+mi_tabla <- design.crd(tratamientos, replicas, seed = 20)
+mi_tabla
+
+#$ indica salidas atomicas como vectores
+#Guardar tabla 
+tabla_diseno <- mi_tabla$book
+
+#Necesitamos un columna para respuestas de la observaciones pero en este caso lo vamos a simular
+set.seed(1010) #crear semilla para guardar distribucion
+respuestas <- rnorm(20, mean = 5, sd = 2) #simular, rnorm indica un normal  
+respuestas
+
+#Grafica de densidad de probabilidad
+
+plot(density(respuestas))
