@@ -72,3 +72,4 @@ boxplot(respuestas ~ tratamientos, data = tabla_diseno, col = c("#2F8FE7", "#B84
         ylab = "Respuestas",
         main = "Experimento simulado")
 #este es un analisis descriptivo
+#Ver que el experimento sea replicable
