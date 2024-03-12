@@ -105,4 +105,6 @@ plot(modelo, which = 1) #en que caso hay homocedasticidad
 
 #evaluar homocedasticidad
 
-bartlett.test(Respuestas ~ Tratamientos, data = tabla_diseno)
+bartlett.test(Respuestas ~ Tratamientos, data = tabla_diseno) #hipotesis: existe homocedasticidad y A: existe heterocedasticidad
+
+#test de Leven - se usa cuando no hay normalidad - buscar pruebas robustas
