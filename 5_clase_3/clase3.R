@@ -63,11 +63,17 @@ attach(tabla_diseno) #no olvidar esto !!!!!
 
 #ANOVA de un via, ya que hay un solo factor de juego es decir tratamientos
 modelo <- aov(Respuestas ~ Tratamientos, data = tabla_diseno)
-resumen <- summary(modelo)
 
+#resumen del anova
+resumen <- summary(modelo)
+resumen
 # Obtener el valor p
 valor_p <- resumen[[1]][["Pr(>F)"]][1]
 
+# Nivel de significancia
+nivel_significancia <- 0.05
+
+#repasar que es el modelo ANOVA - Es importante ver los supuestos de este modelo
 # Evaluar la hipótesis nula
 #se rechaza H cuando el nivel p < niveles de significancia en caso contrario no rechazo H
 if (valor_p < 0.05) {
