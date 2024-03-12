@@ -67,6 +67,21 @@ modelo <- aov(Respuestas ~ Tratamientos, data = tabla_diseno)
 #resumen del anova
 resumen <- summary(modelo)
 resumen
+
+#ver modelos que predicen datos
+fitted(modelo)
+tabla_diseno
+
+#calcular residuos del modelo
+residuos = residuals(modelo)
+residuos #cuidado si no simetrica entonces es un fracaso en este analsis
+
+residuos2 = plot(modelo, which = 2)
+
+#evaluar normalidad
+
+plot(density(residuos))
+
 # Obtener el valor p
 valor_p <- resumen[[1]][["Pr(>F)"]][1]
 
@@ -81,3 +96,13 @@ if (valor_p < 0.05) {
 } else {
   cat("No se puede rechazar la hipótesis nula. Las medias son iguales.\n")
 }
+
+#prueba de shapiro residuos normales y residuos no normales
+shapiro.test(residuos) #prueba de normalidad
+
+#homocedasticidad
+plot(modelo, which = 1) #en que caso hay homocedasticidad
+
+#evaluar homocedasticidad
+
+bartlett.test(Respuestas ~ Tratamientos, data = tabla_diseno)
