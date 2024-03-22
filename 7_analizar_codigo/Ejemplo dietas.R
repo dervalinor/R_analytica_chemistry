@@ -1,4 +1,20 @@
-tratamientos=rep(c("D1","D2","D3","D4"),c(4,6,6,8)) #No se olvide de cerrar el parentesis >:V
+#Para comparar cuatro dietas D 1 , D 2 , D 3 y D 4 , respecto a su influencia
+#en el tiempo de coagulación de la sangre, se seleccionaron 24 animales y
+#cada un recibió aleatoriamente una de las dietas. Los datos se muestran a
+#continuación
+
+#Hacer un diseño totalmente aleotarizado y Annova para comprobar hipotesis
+
+# D1 = {61, 60, 63, 59}
+# D2 = {63, 67, 71, 64, 65, 66}
+# D3 = {68, 66, 71, 67, 68, 68}
+# D4 = {56, 62, 60, 63, 63, 64, 63, 59}
+
+#El diseño completamente aleorizado permite asignar de forma aleaotoria un tratamiento y evitar el sesgo de asignacion
+#sesgo de asignacion.
+
+
+tratamientos=rep(c("D1","D2","D3","D4"),c(4,6,6,8)) 
 tratamientos
 length(tratamientos) #Para indicar el numero de datos coompilados en la tablas, ademas para ver si el comando esta bien 
 respuestas= c(62,60,63,59,
