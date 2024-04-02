@@ -32,3 +32,46 @@
 #e) Interpretar la prueba F si usted considera que esto es adecuado. Caso contra-
   #rio, realice un procedimiento estadístico adecuado que le permita concluir
 #sobre el objetivo del experimento.
+
+#Solucion de GPT-4
+
+# Primero, definimos los datos de los tratamientos y las respuestas correspondientes.
+tratamientos = rep(c("Agitación por remolino", "Duchado", "Baño de pies"), c(9, 9, 9))
+respuestas = c(91, 87, 88, 84, 86, 80, 92, 81, 93,
+               18, 22, 20, 29, 25, 16, 15, 26, 19,
+               6,  6,  8,  9, 13, 10, 12,  5,  9)
+
+# Creamos un dataframe que combina los vectores de tratamientos y respuestas.
+datos = data.frame(tratamientos, respuestas)
+
+# Usamos la función attach() para poder referirnos a las columnas del dataframe por su nombre.
+attach(datos)
+
+# Generamos un boxplot para visualizar la distribución de las respuestas para cada tratamiento.
+boxplot(respuestas ~ tratamientos, data = datos, col = c("pink","purple","lightgreen"))
+
+# Realizamos el ANOVA utilizando la función aov().
+modelo = aov(respuestas ~ tratamientos, data = datos)
+
+# Mostramos el resumen del modelo.
+summary(modelo)
+
+# Calculamos los residuos del modelo.
+residuos = residuals(modelo)
+
+# Realizamos la prueba de Shapiro-Wilk para verificar la normalidad de los residuos.
+shapiro.test(residuos)
+
+# Si el valor p obtenido de la prueba de Shapiro-Wilk es menor que 0.05, entonces los residuos no siguen una distribución normal.
+# En este caso, podríamos considerar transformar los datos o usar un modelo de regresión no paramétrico.
+
+# Realizamos la prueba de Levene para verificar la homocedasticidad de los residuos.
+install.packages("car")
+require(car)
+leveneTest(respuestas ~ tratamientos, data = datos)
+
+# Si el valor p obtenido de la prueba de Levene es menor que 0.05, entonces los residuos no tienen varianzas iguales.
+# En este caso, podríamos considerar transformar los datos o usar un modelo de regresión no paramétrico.
+
+# Finalmente, interpretamos el resultado del ANOVA.
+# Si el valor p obtenido del ANOVA es menor que 0.05, entonces al menos uno de los tratamientos tiene un efecto significativo en la disminución de las bacterias.
