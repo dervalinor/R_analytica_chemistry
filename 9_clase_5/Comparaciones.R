@@ -65,3 +65,4 @@ for (i in 1:(length(contrastes) - 1)) {
 #install.packages("gmodels")
 library(gmodels)
 
+fit.contrast(anova, "azuc", Matrix_contraste)
