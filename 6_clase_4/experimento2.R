@@ -66,3 +66,28 @@ levene_test <- leveneTest(respuestas ~ tratamientos, data = datos_empaques)
 levene_test
 
 #se rechaza H, no hay normalidad
+
+#Transformar datos por medio de un funcion para corregir homocedasticidad o aplicar un prueba no parametrica
+#preocuparse de los supuestos !!!!
+
+#Box matematico dijo para transformar datos - 1. funcion logaritmo natural, 2- raiz cuadrada, 3- numero reciproco
+#con logaritmo arreglo homocedastidad y normalidad
+
+#R: log  es Ln y Log en base 10 es log10
+
+#para evitar el error de Ln(0) = infinito se agrega + 1
+datos_empaques$rt = log(datos_empaques$respuestas + 1)
+attach(datos_empaques)
+datos_empaques
+
+#datos transformadas
+modelo_meso = aov(rt ~ tratamientos, data = datos_empaques)
+residualest = residuals(modelo_meso)
+par(mfrow = c(1, 2))
+plot(density(residualest))
+plot(modelo_meso, which = 2)
+
+#ver prueba de normalidad
+shapiro.test(residualest)
+
+#el annova no resiste la asimetria

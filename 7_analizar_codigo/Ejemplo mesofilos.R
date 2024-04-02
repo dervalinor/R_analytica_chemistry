@@ -11,7 +11,7 @@ length(respuestas)
 datosmesofilos=data.frame(tratamientos,respuestas)
 datosmesofilos
 attach(datosmesofilos)
-boxplot=(respuestas~tratamientos, data=datosmesofilos,col=c("pink","purple","lightgreen","skyblue","yellow","red","beige"))
+boxplot(respuestas ~ tratamientos, data = datosmesofilos, col = c("pink","purple","lightgreen","skyblue","yellow","red","beige"))
 
 #anova
 modelomeso=aov(respuestas~tratamientos, data=datosmesofilos)
