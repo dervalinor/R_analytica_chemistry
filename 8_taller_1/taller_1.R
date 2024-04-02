@@ -66,7 +66,7 @@ shapiro.test(residuos)
 # En este caso, podríamos considerar transformar los datos o usar un modelo de regresión no paramétrico.
 
 # Realizamos la prueba de Levene para verificar la homocedasticidad de los residuos.
-install.packages("car")
+#install.packages("car")
 require(car)
 leveneTest(respuestas ~ tratamientos, data = datos)
 
@@ -75,3 +75,5 @@ leveneTest(respuestas ~ tratamientos, data = datos)
 
 # Finalmente, interpretamos el resultado del ANOVA.
 # Si el valor p obtenido del ANOVA es menor que 0.05, entonces al menos uno de los tratamientos tiene un efecto significativo en la disminución de las bacterias.
+
+
