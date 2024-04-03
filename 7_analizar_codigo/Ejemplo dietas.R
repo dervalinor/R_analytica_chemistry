@@ -80,13 +80,35 @@ plot(modelodietas,which=2) #Grafico cuantil cuantil, which = 2 indica para evalu
 #(ver https://www.statology.org/qq-plot-interpretation/)
 
 
-#Los graficos ayudan en la coclusión del anova, sin embargo hace falta una prueba de hipotesis
+#Los graficos ayudan en la conclusión del anova, sin embargo hace falta una prueba de hipotesis
 dev.off()
 
 #Prueba de normalidad
-shapiro.test(residualesd)
-#No rechazo H, acepto H
-#Hay normalidad
+resultado_test <- shapiro.test(residualesd) #esta prueba nos devuelve un p valor para evaluar normalidad de un modelo anova
+#para este caso la hipotesis nula es que la modelo tiene un distribucion normal 
+#se acepta la hipotesis nula cuando p-valor es mayor que el nivel se significancia en caso contrario
+#se rechaza la hipotesis nula y no existe normalidad
+
+#obtener p-valor
+p_valor <- resultado_test$p.value
+p_valor
+
+#vamos a ver si acepta o se rechaza la hipotesis nula
+
+if(p_valor >= 0.05) {
+  print("Se acepta la hipotesis nula, entonces existe normalidad en el modelo")
+} else {
+  print("Se rechaza la hipotesis nula, entonces no existe normalidad")
+}
+
+#para esta caso para aceptar la hipotesis de normalidad el p valor debe ser
+#mayor al nivel de significancia es decir a 0.05  
+
+#nivel de significancia es el umbral para aceptar o rechazar la hipotesis nula
+
+#No rechazo H, acepto H la cual es que existe normalidad
+#Hay normalidad ya que  p-value = 0.9582 es mayor al nivel de significancia 
+
 
 #Supuesto de Homocedasticidad
 #Gráfico
