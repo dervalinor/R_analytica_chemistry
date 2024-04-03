@@ -5,27 +5,40 @@
 
 #Hacer un diseño totalmente aleotarizado y Annova para comprobar hipotesis
 
-# D1 = {61, 60, 63, 59}
-# D2 = {63, 67, 71, 64, 65, 66}
-# D3 = {68, 66, 71, 67, 68, 68}
-# D4 = {56, 62, 60, 63, 63, 64, 63, 59}
+# D1 = {61, 60, 63, 59} - 4 animales
+# D2 = {63, 67, 71, 64, 65, 66} - 6 animales
+# D3 = {68, 66, 71, 67, 68, 68} - 6 animales
+# D4 = {56, 62, 60, 63, 63, 64, 63, 59} - 8 animales
 
 #El diseño completamente aleorizado permite asignar de forma aleaotoria un tratamiento y evitar el sesgo de asignacion
 #sesgo de asignacion.
 
 
-tratamientos=rep(c("D1","D2","D3","D4"),c(4,6,6,8)) 
+tratamientos=rep(c("D1","D2","D3","D4"),c(4,6,6,8)) # c(4,6,6,8) indica el numero de animales que se aplico la dieta
 tratamientos
+#aplicando la funcion rep que sirve para repetir elementos de un vector por ejemplo D1 se repite 4 veces, D2 se repite 6 veces
+#asi sucesivamente es decir obtenido un vector: "D1" "D1" "D1" "D1" "D2" "D2" "D2" "D2" "D2" "D2" "D3" "D3" 
+# "D3" "D3" "D3" "D3" "D4" "D4" "D4" "D4" "D4" "D4" "D4" "D4" es cual se empareja con la variable respuesta
+
 length(tratamientos) #Para indicar el numero de datos coompilados en la tablas, ademas para ver si el comando esta bien 
+
 respuestas= c(62,60,63,59,
               63,67,71,64,65,66,
               68,66,71,67,68,68,
               56,62,60,63,63,64,63,59) #Los datos son separados para que se vean ordenados
 length(respuestas)
-datosdietas=data.frame(tratamientos,respuestas) #Une la tabla #caja es frame
-datosdietas #Sale la tabla de datos
-attach(datosdietas) #Para trabajar con cada uno por separdo la columna 
-boxplot(respuestas~tratamientos,data=datosdietas, col=c("skyblue","pink","purple","yellow"))
+datosdietas=data.frame(tratamientos,respuestas) #crear un marco de datos en una tabla donde se relaciona tratamientos y respuestas
+datosdietas #ver en una tabla la relacion de datos de tratamientos y respuestas
+attach(datosdietas) #Adjuntar datos al entorno de trabajo en R, esto hacer que la variable del marco de trabajo son accesibles por su
+#nombre, estas variables se entiende como columnas para esta caso son las variable llamadas "tratamientos" y "respuestas"
+
+boxplot(respuestas~tratamientos,data=datosdietas, col=c("skyblue","pink","purple","yellow")) #crear diagrama de caja
+#que muestra la distribucion de datos en cuartiles
+#como interpretar un boxplot
+
+#La linea central representa la mediana, es decir el valor medio cuando los datos se ordenar de
+#forma ascendente
+
 
 #SUPUESTOS -diagnosticos
 residualesd=residuals(modelodietas)
