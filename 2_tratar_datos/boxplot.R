@@ -64,7 +64,7 @@ boxplot(celulas ~ trat) #celulas vs trat, tratamiento 2 no recomendable por que 
 #pero el tratamiento 1 es mas recomendable menos celulas cancerigenas
 #la mediana es la raya negra indica el 50% de los datos y los puntos significa los datos atipicos
 
-#ver estadistica inferencial- intervalos de confianza y pruebas de hipotesis
+#Ver estadistica inferencial- intervalos de confianza y pruebas de hipotesis
 #Estudiar LaTeX
 
 

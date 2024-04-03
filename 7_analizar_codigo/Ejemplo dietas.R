@@ -32,16 +32,31 @@ datosdietas #ver en una tabla la relacion de datos de tratamientos y respuestas
 attach(datosdietas) #Adjuntar datos al entorno de trabajo en R, esto hacer que la variable del marco de trabajo son accesibles por su
 #nombre, estas variables se entiende como columnas para esta caso son las variable llamadas "tratamientos" y "respuestas"
 
-boxplot(respuestas~tratamientos,data=datosdietas, col=c("skyblue","pink","purple","yellow")) #crear diagrama de caja
+boxplot(respuestas~tratamientos,data=datosdietas, col=c("#30C9DB","#E247E0","#2DCC90","#C2DE48")) #crear diagrama de caja
 #que muestra la distribucion de datos en cuartiles
 #como interpretar un boxplot
 
 #La linea central representa la mediana, es decir el valor medio cuando los datos se ordenar de
 #forma ascendente
+#cuartiles - dividen los datos en 4 parte cada una con el 25%, donde debajo de la mediana de encuentra el cuartil uno que es el
+#mediana de los datos debajo de la linea central
+# ejemplo: datos = 3, 5, 6, 7, 9, 12 y 15 donde el cualtil 1 es 5 ya que es la mediana de los datos debajo de linea central (3, 5, 6)
+#cuartil 2 es la linea central, cuartil 3 es la mediana de los datos arriba de linea central (9, 12, 15)
 
+#informacion que nos da un boxplot: 1. identificación de la tendencia central y la dispersión  es decir ver donde se 
+#concentran los datos y como se dispersan estos. 2. también permite identificar valores que estan fuera de la tendencia de los 
+#datos, 3. comparación de distintos tratamientos y como se distribuye sus datos
+
+#ANOVA - Analisis de Varianza es utilizada para evaluar si hay diferencias significativas de las medias
+#entre varios grupos en esta caso son en las dietas como afectan el tiempo de coagulación, para esto se plantea
+#dos hipotesis, la hipotesis nula donde no existen diferencias significativas de medias en los grupos y la hipotesis
+#alternativa donde existen diferencias entre la medias de los grupos
+modelodietas=aov(respuestas~tratamientos,data=datosdietas)
+summary(modelodietas)
 
 #SUPUESTOS -diagnosticos
-residualesd=residuals(modelodietas)
+residualesd=residuals(modelodietas) #calcula la diferencia entre el modelo de regresión y los datos reales 
+# Residuo = datos real - datos predicho por la regresion el cual viene del ANOVA
 residualesd
 
 #Normalidad
@@ -60,7 +75,7 @@ shapiro.test(residualesd)
 #Supuesto de Homocedasticidad
 #Gráfico
 plot(modelodietas,which=1) #No hay embudos
-install.packages("car")
+#install.packages("car")
 
 #Test de Bartlett
 bartlett.test(respuestas~tratamientos,data=datosdietas)
@@ -68,10 +83,6 @@ bartlett.test(respuestas~tratamientos,data=datosdietas)
 
 #Independencia (Supuesto)
 plot(1:24,residualesd,pch=8)
-
-#ANOVA
-modelodietas=aov(respuestas~tratamientos,data=datosdietas)
-summary(modelodietas)
 
 #Interpretacion anova
 #los tratamientos o las dietas si tienen efecto en la variable respuesta que es el tiempo de coagulación 
