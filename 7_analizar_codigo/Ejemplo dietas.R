@@ -74,8 +74,10 @@ par(mfrow=c(1,2))#División plano: Esto permite mostrar en la ventana grafica lo
 plot(density(residualesd)) #Este es primer grafico que se muestra y es la densidad de residuos esta debe ser
 #de una forma de campana simetrica 
 plot(modelodietas,which=2) #Grafico cuantil cuantil, which = 2 indica para evaluar la normalidad de los residuos
-#para q-q plot, donde el eje y indica los residuos reales y eje x los residuos teoricos 
-# 
+#para q-q plot, donde el eje y indica los residuos reales y eje x los residuos teoricos, si muchos puntos forman una
+#linea recta en la diagonal entonces existe un distribución normal de los datos, pero en caso contrario formando por ejemplo 
+#un arco, un tendencia exponencial hacia arriba no normalidad no es buena o no existe 
+#(ver https://www.statology.org/qq-plot-interpretation/)
 
 
 #Los graficos ayudan en la coclusión del anova, sin embargo hace falta una prueba de hipotesis
