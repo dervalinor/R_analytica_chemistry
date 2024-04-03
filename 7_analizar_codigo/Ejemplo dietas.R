@@ -50,19 +50,29 @@ boxplot(respuestas~tratamientos,data=datosdietas, col=c("#30C9DB","#E247E0","#2D
 #ANOVA - Analisis de Varianza es utilizada para evaluar si hay diferencias significativas de las medias
 #entre varios grupos en esta caso son en las dietas como afectan el tiempo de coagulación, para esto se plantea
 #dos hipotesis, la hipotesis nula donde no existen diferencias significativas de medias en los grupos y la hipotesis
-#alternativa donde existen diferencias entre la medias de los grupos
+#alternativa donde existen diferencias entre la medias de los grupos, al final obtenemos el valor F el cual nos indica si
+#la variabilidad entre los grupos grupos es significativa respecto a la variabilidad dentro del grupo
+# F = SSG/SSE donde SSG representa la variabilidad entre grupos (respecto a la media de todos los datos) y 
+#SSE representa la variabilidad dentro del grupo (respecto a la media de cada grupo). Si F es alta
+#esto quiere decir que la variabilidad es mayor entre grupos que dentro de estos
+# La variabilidad se mide como la suma de cuadrados respecto a la media \[ SST = \sum_{i=1}^{n} (x_i - \bar{x})^2 \]
+
 modelodietas=aov(respuestas~tratamientos,data=datosdietas)
 summary(modelodietas)
 
 #SUPUESTOS -diagnosticos
 residualesd=residuals(modelodietas) #calcula la diferencia entre el modelo de regresión y los datos reales 
-# Residuo = datos real - datos predicho por la regresion el cual viene del ANOVA
+# Residuo = datos real - datos predicho por la regresion el cual viene del ANOVA, esto sirve para saber si existe
+#un distribucion normal en tal caso los residuos son pequeños y evaluar aleatoridad
 residualesd
 
-#Normalidad
+#Es prime supuesto que se va evaluar es Normalidad, esto se hara por medio de 
+#graficos de densidad y Q-Q plot
+
 #Gráficos
-par(mfrow=c(1,2))#División plano
-plot(density(residualesd))
+par(mfrow=c(1,2))#División plano: Esto permite mostrar en la ventana grafica los dos graficos
+plot(density(residualesd)) #Este es primer grafico que se muestra y es la densidad de residuos esta debe ser
+#de una forma de campana
 plot(modelodietas,which=2) #Grafico cuantil cuantil
 #Los graficos ayudan en la coclusión del anova, sin embargo hace falta una prueba de hipotesis
 dev.off()
