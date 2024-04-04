@@ -81,7 +81,7 @@ plot(modelodietas,which=2) #Grafico cuantil cuantil, which = 2 indica para evalu
 
 
 #Los graficos ayudan en la conclusión del anova, sin embargo hace falta una prueba de hipotesis
-dev.off()
+dev.off() #cerrar graficos creados para dejar limpio la seccion de graficos
 
 #Prueba de normalidad
 resultado_test <- shapiro.test(residualesd) #esta prueba nos devuelve un p valor para evaluar normalidad de un modelo anova
@@ -112,7 +112,23 @@ if(p_valor >= 0.05) {
 
 #Supuesto de Homocedasticidad
 #Gráfico
-plot(modelodietas,which=1) #No hay embudos
+plot(modelodietas,which=1) #the argumento "which = 1" indica que se evaluara homocedasticidad
+#El concepto de homocedasticidad es la suposicion donde los errores de un modelo estadistico es constante en la
+#variable independiente, por ende no existen variaciones de errores en la variable independiente es decir se 
+#tiene la mismo precision en las medidas
+#Nos da la precision del modelo de normalidad, es decir que el modelo puede ser apto para tratar estos
+#datos y que sus resultados sean viables y la conclusiones obtenidas por el modelo sean validas
+
+#Ejemplos: si esta fabricando cintas metricas cada cinta metrica debe tener la misma precision para sus mediciones
+#para asi tener cintas metricas se obtenga resultados confiables.
+
+#Ejemplo: Imagina que quieres estimar con un modelo matematico cuanto tiempo te tomaria llegar en auto a tu destino
+#si la viriabilidad de la estimaciones del modelo y la realidad es constante en cualquier punto entonces existe
+#homocedasticidad y el modelo es confiable para predicir cuanto tiempo te llevara ir a un lugar pero si la variabilidad
+#de estimaciones es variable en distintos puntos entonces el modelo no es confiable en sus prediciones
+
+
+#No hay embudos
 #install.packages("car")
 
 #Test de Bartlett
