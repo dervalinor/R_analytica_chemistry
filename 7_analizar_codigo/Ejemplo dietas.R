@@ -128,11 +128,37 @@ plot(modelodietas,which=1) #the argumento "which = 1" indica que se evaluara hom
 #de estimaciones es variable en distintos puntos entonces el modelo no es confiable en sus prediciones
 
 
-#No hay embudos
+#No hay embudos, se debe observar un patron aleatorio y no en forma de embudo (cuando lo residuos se estrechan o se amplia a partir
+#de aumento de valores), debe existir una distribucion homogenea de errores son patrones, los patrones indican sesgos
+#embudos es cuando los residuos son mas pequeños en el centro y mas grande a los lados, esto indicaria
+#que la variacion de residuos no es constante los cual viola la homocedasticidad, ya que idealmente
+#debe hacer una distribucion uniforme y aleatoria esto indica que los errores son constantes pero si existe
+#un patron entonces quiere decir que la variabilidad de errores no es constante y no hay homocedasticidad
+
 #install.packages("car")
 
 #Test de Bartlett
-bartlett.test(respuestas~tratamientos,data=datosdietas)
+prueba_bartlett <- bartlett.test(respuestas~tratamientos,data=datosdietas) #mira varibilidad de los datos en sus varianzas de varios grupos
+#de datos, aqui la hipotesis nula es que la varianza de los grupos son iguales, recordar que la varianza mide la dispersion de los 
+#datos
+
+#Si el valor p es mayor que el nivel de significancia (generalmente 0.05), no hay suficiente evidencia para rechazar la hipótesis nula. 
+#Esto sugiere que las varianzas de los grupos son iguales y que se cumple la homocedasticidad en el análisis de regresión.
+
+p_valor_b = prueba_bartlett$p.value
+
+if(p_valor_b >= 0.05){
+  print("Existe homocedasticidad, varianzas de los dietas similares")
+} else {
+  print("No existe homocedasticidad, varianzas son diferentes")
+}
+
+#p valor indica la probalidad de la hipotesis
+
+#si el p valor es menor al nivel de significancia 0.05 entonces se rechaza la hipotesis nula y se considera que existe una diferencia
+#significatica entre la varianza en caso contrario se acepta la hipotesis nula por lo cual se concluye las varianzas entre los 
+#grupos son iguales
+
 #Hay homocedasticidad, no rechazo H
 
 #Independencia (Supuesto)
