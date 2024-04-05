@@ -1,3 +1,21 @@
+require(car)
+
+#En un estudio de diferentes empaques para la carne, Gómez y González(1991)
+#realizaron una prueba microbiológica y contabilizaron el número de
+#mesófilos en las diferentes muestras analizadas. Los resultados se pre-
+#sentan en la siguiente tabla
+
+#se van a hacr  5 replicas, empaques T1, T2, T3, T4, T5 Y T6
+#T1 = 280, 30, 0, 10, 50
+#T2 = 10, 20, 20, 20, 30
+#T3 = 80, 90, 10, 90, 60
+#T5 = 10, 10, 10, 20, 0
+#T6 = 30, 40, 40, 40, 10
+
+#analizar Si los empaques afecta el Número de mesófilos en cada una de las diferentes envolturas.
+#Evalúe los supuestos de normalidad y homogeneidad de varianzas
+
+
 tratamientos=rep(c("T1","T2","T3","T4","T5","T6"),c(5,5,5,5,5,5))
 tratamientos
 length(tratamientos)
@@ -13,10 +31,10 @@ datosmesofilos
 attach(datosmesofilos)
 boxplot(respuestas ~ tratamientos, data = datosmesofilos, col = c("pink","purple","lightgreen","skyblue","yellow","red","beige"))
 
-#anova
+#1. anova
 modelomeso=aov(respuestas~tratamientos, data=datosmesofilos)
 
-#diagnosticos supuestos
+#2. diagnosticos supuestos
 residuosmeso=residuals(modelomeso)
 residuosmeso
 
@@ -32,8 +50,7 @@ shapiro.test(residuosmeso)
 #Homocedasticidad
 dev.off()
 plot(modelomeso,which=1)
-install.packages("car")
-require(car)
+#install.packages("car")
 leveneTest(respuestas~factor(tratamientos),data=datosmesofilos) #El factor es para que no salga el error
 #Para el test de levene hay homocedasticidad, pero por los embudos hay que preocuparse, por eso este ejemplo es todo lo malo que puede pasarte en la vida
 #Hay una simetria demasiado marcada
