@@ -51,7 +51,23 @@ shapiro.test(residuosmeso)
 dev.off()
 plot(modelomeso,which=1)
 #install.packages("car")
-leveneTest(respuestas~factor(tratamientos),data=datosmesofilos) #El factor es para que no salga el error
+leveneTest(respuestas~factor(tratamientos),data=datosmesofilos) 
+#El test de Levene es utilizado cuando se viola el principio de normalidad en el anova solo en tal caso se 
+#se usa, es para evaluar homocedasticidad 
+#Formulación de hipótesis en el test de Levene:
+  
+#Hipótesis nula (H0): La varianza es la misma para todos los grupos.
+#Hipótesis alternativa (H1): Al menos una de las varianzas es diferente de las demás.
+
+#Interpretación del resultado:
+  
+#Si el valor p es menor que un nivel de significancia predefinido (comúnmente 0.05), 
+#se rechaza la hipótesis nula y se concluye que al menos una de las varianzas es significativamente diferente de las demás.
+#Si el valor p es mayor que el nivel de significancia, no hay suficiente evidencia para rechazar 
+#la hipótesis nula, lo que sugiere que las varianzas son similares entre los grupos.
+
+
+#El factor es para que no salga el error
 #Para el test de levene hay homocedasticidad, pero por los embudos hay que preocuparse, por eso este ejemplo es todo lo malo que puede pasarte en la vida
 #Hay una simetria demasiado marcada
 #El objetivo de trasnformar los datos es corregir los errores de homocedasticidad (Por culpa del embudo), lo que trae efectos colaterales
