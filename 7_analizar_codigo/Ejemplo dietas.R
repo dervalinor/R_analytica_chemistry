@@ -60,6 +60,11 @@ boxplot(respuestas~tratamientos,data=datosdietas, col=c("#30C9DB","#E247E0","#2D
 modelodietas=aov(respuestas~tratamientos,data=datosdietas)
 summary(modelodietas)
 
+#Hipotesis nula: no hay diferencias significativas entre las medias de los grupos es decir
+#los tratamientos de dietas no afectan la coagulacion de la sangre
+
+
+
 #SUPUESTOS -diagnosticos
 residualesd=residuals(modelodietas) #calcula la diferencia entre el modelo de regresión y los datos reales 
 # Residuo = datos real - datos predicho por la regresion el cual viene del ANOVA, esto sirve para saber si existe
@@ -162,7 +167,18 @@ if(p_valor_b >= 0.05){
 #Hay homocedasticidad, no rechazo H
 
 #Independencia (Supuesto)
-plot(1:24,residualesd,pch=8)
+plot(1:24,residualesd,pch=8) #pch = 8 indica un marcador de puntos solidos
+#Este codigo genera un grafico de dispersion para evaluar independencia de ANOVA, es decir 
+#que la observacion realizada no esta afectada por otra observacion realizada en el analisis 
+#se tiene que observar puntos aleatorios y no patrones para decir que existe independencia
+#y asi ser valido el analisis de ANOVA, esto se hacer observando lo residuos 
+#residuo = respuesta_observada - respuesta_predicha_modelo
+#en esta caso es el modelo ANOVA que por medio de las medias piensa predecir los valores que se observara
+#ademas de ver si las diferencias de medias son significativas
+
+# ANOVA también evaluaría si las diferencias entre los puntajes promedio de los equipos son lo 
+#suficientemente grandes como para ser consideradas significativas desde un punto de vista estadístico. 
+#Esto se hace mediante la comparación de la variabilidad entre los grupos con la variabilidad dentro de los grupos.
 
 #Interpretacion anova
 #los tratamientos o las dietas si tienen efecto en la variable respuesta que es el tiempo de coagulación 
