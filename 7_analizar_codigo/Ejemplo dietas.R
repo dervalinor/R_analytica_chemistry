@@ -57,12 +57,21 @@ boxplot(respuestas~tratamientos,data=datosdietas, col=c("#30C9DB","#E247E0","#2D
 #esto quiere decir que la variabilidad es mayor entre grupos que dentro de estos
 # La variabilidad se mide como la suma de cuadrados respecto a la media \[ SST = \sum_{i=1}^{n} (x_i - \bar{x})^2 \]
 
-modelodietas=aov(respuestas~tratamientos,data=datosdietas)
-summary(modelodietas)
+modelodietas = aov(respuestas~tratamientos,data=datosdietas)
+resumen_anova = summary(modelodietas)
 
 #Hipotesis nula: no hay diferencias significativas entre las medias de los grupos es decir
 #los tratamientos de dietas no afectan la coagulacion de la sangre
 
+#ver si rechaza o se acepta la hipotesis nula
+p_valor_aov <- resumen_anova[[1]][["Pr(>F)"]][1]
+
+#se rechaza H cuando el nivel p < niveles de significancia en caso contrario no rechazo H
+if(p_valor_aov >= 0.05){
+  print("Se acepta la hipotesis nula no hay diferencias significativas entre las dietas")
+} else {
+  print("Se rechaza la hipotesis nula si hay diferencias significativas entre las dietas")
+}
 
 
 #SUPUESTOS -diagnosticos
@@ -96,7 +105,6 @@ resultado_test <- shapiro.test(residualesd) #esta prueba nos devuelve un p valor
 
 #obtener p-valor
 p_valor <- resultado_test$p.value
-p_valor
 
 #vamos a ver si acepta o se rechaza la hipotesis nula
 
@@ -182,3 +190,16 @@ plot(1:24,residualesd,pch=8) #pch = 8 indica un marcador de puntos solidos
 
 #Interpretacion anova
 #los tratamientos o las dietas si tienen efecto en la variable respuesta que es el tiempo de coagulación 
+#siempre que p valor sea mayor a 0.05 se acepta la hipotesis nula !!!!!!
+
+#Es importante recordar que el valor p es una medida de la evidencia en contra de la hipótesis nula, 
+#y un valor p mayor que el nivel de significancia no necesariamente significa que la hipótesis nula sea cierta. 
+#Simplemente indica que no hay suficiente evidencia en los datos para rechazarla.
+
+#El p-valor es la probabilidad de obtener resultados 
+#al menos tan extremos como los observados en la muestra, si la hipótesis nula es verdadera.
+
+#IMPORTANTE!!!!!!!
+#Si el p-valor es menor o igual que el nivel de significancia (α), generalmente 0.05, se rechaza la 
+#hipótesis nula. Esto significa que hay suficiente evidencia en los datos para concluir que el efecto 
+#observado no ocurrió por azar y que hay una diferencia significativa entre los grupos o condiciones.
