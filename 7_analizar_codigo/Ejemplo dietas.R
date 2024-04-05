@@ -103,6 +103,8 @@ resultado_test <- shapiro.test(residualesd) #esta prueba nos devuelve un p valor
 #se acepta la hipotesis nula cuando p-valor es mayor que el nivel se significancia en caso contrario
 #se rechaza la hipotesis nula y no existe normalidad
 
+summary(resultado_test) #ver resultado del test
+
 #obtener p-valor
 p_valor <- resultado_test$p.value
 

@@ -51,20 +51,31 @@ shapiro.test(residuosmeso)
 dev.off()
 plot(modelomeso,which=1)
 #install.packages("car")
-leveneTest(respuestas~factor(tratamientos),data=datosmesofilos) 
+Prueba_levene = leveneTest(respuestas~factor(tratamientos),data=datosmesofilos) 
+summary(Prueba_levene)
 #El test de Levene es utilizado cuando se viola el principio de normalidad en el anova solo en tal caso se 
 #se usa, es para evaluar homocedasticidad 
 #Formulación de hipótesis en el test de Levene:
   
-#Hipótesis nula (H0): La varianza es la misma para todos los grupos.
+#Hipótesis nula (H0): La varianza es la misma para todos los grupos - existe homocedasticidad
 #Hipótesis alternativa (H1): Al menos una de las varianzas es diferente de las demás.
 
 #Interpretación del resultado:
   
 #Si el valor p es menor que un nivel de significancia predefinido (comúnmente 0.05), 
-#se rechaza la hipótesis nula y se concluye que al menos una de las varianzas es significativamente diferente de las demás.
+#se rechaza la hipótesis nula y se concluye que al menos una de las varianzas es significativamente 
+#diferente de las demás.
 #Si el valor p es mayor que el nivel de significancia, no hay suficiente evidencia para rechazar 
 #la hipótesis nula, lo que sugiere que las varianzas son similares entre los grupos.
+
+p_levene_valor =  Prueba_levene$`Pr(>F)`[1] #acceder al numero del elemento Pr(>F)
+p_levene_valor
+
+if(p_levene_valor >= 0.05){
+  print("Se acepta la hipotesis de que si puede existir homocedasticidad")
+} else {
+  print("Se rechaza la hipotesis de que existe homocedasticidad")
+}
 
 
 #El factor es para que no salga el error
