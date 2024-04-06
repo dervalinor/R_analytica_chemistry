@@ -136,9 +136,9 @@ resultado_bartlett = bartlett.test(respuestas~metodos,data=datosbacterias)#se re
 p_valor_bartlett = resultado_bartlett$p.value
 
 if(p_valor_bartlett >= 0.05){
-  print("")
+  print("Se cumple el supuesto de homocedasticidad")
 } else {
-  print("")
+  print("No se cumple el supuesto de homocedasticidad")
 }
 
 
