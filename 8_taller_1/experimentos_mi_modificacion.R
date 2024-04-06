@@ -125,20 +125,31 @@ plot(modelobacterias,which=1)#grafico de residuos contra los valores ajustados p
 #como hay normalidad se va a hacer el test de bartlett
 #install.packages("car")#instalación de paquete para poder realizar el test de bartlett o levene, según cual sea necesario
 require(car)#llamar el paquete descargado para realizar test de bartlett
-bartlett.test(respuestas~metodos,data=datosbacterias)#se realiza test de bartlett para obtener pvalor y comprobar la homocedasticidad
+resultado_bartlett = bartlett.test(respuestas~metodos,data=datosbacterias)#se realiza test de bartlett para obtener pvalor y comprobar la homocedasticidad
 #Al realizar el test de bartlett las hipótesis serían
 #Hipótesis Nula= Hay homocedasticidad
 #Hipótesis alternativa= Hay heterocedasticidad
 #por ello si el pvalor es mayor que el valor de significancia acepto la hipótesis nula, que es lo mismo que decir rechazo la hipótesis alternativa
 #si el pvalor es menor que el valor de significancia rechazo la hipótesis nula o acepto la hipótesis alternativa
-#como vemos p-value > a 0,005 esto nos da a entender que se acepta la hipótesis nula por ende hay homocedasticidad. 
+#como vemos p-value > a 0,05 esto nos da a entender que se acepta la hipótesis nula por ende hay homocedasticidad. 
+
+p_valor_bartlett = resultado_bartlett$p.value
+
+if(p_valor_bartlett >= 0.05){
+  print("")
+} else {
+  print("")
+}
 
 
+#INDEPENDENCIA - Evitar tener sesgos que afecten la observaciones ya que cada observacion deber se independiente de la otra, sin preferencias
+#de una por la otra, evitar que concepciones preconcebidas efecte nuestra intrepetacion del experimento
 
+#Los sesgos cognitivos son atajos mentales o patrones de pensamiento que pueden distorsionar nuestra percepción y toma de decisiones!!!!
 
-#INDEPENDENCIA 
 plot(1:27,residualesd,pch=9)#grafico de residuales de cada resultado para verificar independencia de los datos, visualizando que los datos no tengan tendencia.
-#como se observa los valores estan distribuidos aleatoriamente, es decir no hay una tendencia en los resultados, esto nos da entender que si hay independencia.
+#como se observa los valores estan distribuidos aleatoriamente, es decir no hay una tendencia en los resultados, 
+#esto nos da entender que si hay independencia.
 #interpretación anova
 summary(modelobacterias)#de nuevo el p valor con el cual al verificar los supuestos ya se tiene seguridad de las conclusiones.
 #ahora sí, como observamos el pvalor< a 0,005.
