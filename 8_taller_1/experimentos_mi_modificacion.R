@@ -71,6 +71,7 @@ boxplot(respuestas~metodos,data=datosbacterias,col=c("skyblue","yellow","green")
 
 
 #3. Prueba de hipotesis
+#para estos casos se toma un nivel de significancia de 0.05
 
 #Hipotesis a evaluar: existe una diferencias significativa entre los 3 tratamientos para la reduccion de la flora bacteriana en los 
 #pies
@@ -92,14 +93,13 @@ resumen_bac_pies = summary(modelobacterias)#este resumen es para obtener el pval
 p_valor_aov <- resumen_bac_pies[[1]][["Pr(>F)"]][1]
 
 if(p_valor_aov >= 0.05){
-  print("Existen pruebas suficientes para aceptar la hipotesis nula entonces 
+  print(paste("Existen pruebas suficientes para aceptar la hipotesis nula entonces 
         no hay diferencias significativas entre los tratamientos para dismunuir el porcentaje
-        de flora bacteriana en los pies")
+        de flora bacteriana en los pies con un p valor (p >= 0.05): ", p_valor_aov))
 } else {
-  print("Se rechaza la hipotesis nula si hay diferencias significativas entre los tratamientos para disminuir el
-        porcentaje de flora bacteriana")
+  print(paste("Se rechaza la hipotesis nula si hay diferencias significativas entre los tratamientos para disminuir el
+        porcentaje de flora bacteriana con un p valor (p < 0.05): ", p_valor_aov))
 }
-
 
 #4. Analisis de supuestos
 
@@ -135,7 +135,7 @@ resultado_shapiro = shapiro.test(residualesd)#realiza el test de shapiro con el 
 p_valor_shapiro = resultado_shapiro$p.value
 
 if(p_valor_shapiro >= 0.05){
-  print("Se acepta la hipotesis nula, entonces existe normalidad en el modelo")
+  print(paste("Se acepta la hipotesis nula, entonces existe normalidad en el modelo con un p valor (p > 0.05): ", p_valor_shapiro))
 } else {
   print("Se rechaza la hipotesis nula, entonces no existe normalidad")
 }
@@ -159,9 +159,9 @@ resultado_bartlett = bartlett.test(respuestas~metodos,data=datosbacterias)#se re
 p_valor_bartlett = resultado_bartlett$p.value
 
 if(p_valor_bartlett >= 0.05){
-  print("Se cumple el supuesto de homocedasticidad")
+  print(paste("Se cumple el supuesto de homocedasticidad con un p valor (p >= 0.05): ", p_valor_bartlett))
 } else {
-  print("No se cumple el supuesto de homocedasticidad")
+  print(paste("No se cumple el supuesto de homocedasticidad con un p valor de: ", p_valor_bartlett))
 }
 
 
