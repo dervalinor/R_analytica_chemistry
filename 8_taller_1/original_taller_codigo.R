@@ -19,7 +19,7 @@ summary(modelobacterias)#este resumen es para obtener el pvalor, sin embargo, es
 #hipótesis alternativa= Hay efecto de algún tratamiento sobre la variable respuesta
 #por ello si el pvalor es mayor que el valor de significancia acepto la hipótesis nula, que es lo mismo que decir rechazo la hipótesis alternativa
 #si el pvalor es menor que el valor de significancia rechazo la hipótesis nula o acepto la hipótesis alternativa
-#vamos a tomar a F (valor de significancia) =0,005 como Pr < F (el p valor es menor al valor de significancia),
+#vamos a tomar a F (valor de significancia) =0,05 como Pr < F (el p valor es menor al valor de significancia),
 #eso nos da a entender que: acepto el la hipotesis alternativo, hay efecto de los tratamientos; los tratamientos están afectando a la 
 #variable de respuesta que en este caso es el porcentaje de 
 #disminuación de las bacterias.sin embargo, no podemos estar completamente seguros.
@@ -37,7 +37,7 @@ shapiro.test(residualesd)#realiza el test de shapiro con el cual se verifica que
 #Hipótesis alternativa= No hay normalidad
 #por ello si el pvalor es mayor que el valor de significancia acepto la hipótesis nula, que es lo mismo que decir rechazo la hipótesis alternativa
 #si el pvalor es menor que el valor de significancia rechazo la hipótesis nula o acepto la hipótesis alternativa
-#como p-value >0,005 eso nos da entender que aceptamos la hipótesis nula es decir los residuales son normales. 
+#como p-value >0,05 eso nos da entender que aceptamos la hipótesis nula es decir los residuales son normales. 
 #HOMOCEDASTICIDAD
 dev.off()#termina la división en la ventana de gráfico
 plot(modelobacterias,which=1)#grafico de residuos contra los valores ajustados para verificar homocedasticidad siempre que no existan embudos de los residuales
@@ -51,12 +51,12 @@ bartlett.test(respuestas~metodos,data=datosbacterias)#se realiza test de bartlet
 #Hipótesis alternativa= Hay heterocedasticidad
 #por ello si el pvalor es mayor que el valor de significancia acepto la hipótesis nula, que es lo mismo que decir rechazo la hipótesis alternativa
 #si el pvalor es menor que el valor de significancia rechazo la hipótesis nula o acepto la hipótesis alternativa
-#como vemos p-value > a 0,005 esto nos da a entender que se acepta la hipótesis nula por ende hay homocedasticidad. 
+#como vemos p-value > a 0,05 esto nos da a entender que se acepta la hipótesis nula por ende hay homocedasticidad. 
 #INDEPENDENCIA 
 plot(1:27,residualesd,pch=9)#grafico de residuales de cada resultado para verificar independencia de los datos, visualizando que los datos no tengan tendencia.
 #como se observa los valores estan distribuidos aleatoriamente, es decir no hay una tendencia en los resultados, esto nos da entender que si hay independencia.
 #interpretación anova
 summary(modelobacterias)#de nuevo el p valor con el cual al verificar los supuestos ya se tiene seguridad de las conclusiones.
-#ahora sí, como observamos el pvalor< a 0,005.
+#ahora sí, como observamos el pvalor< a 0,05.
 #entonces los métodos están afectando el porcentaje de disminución de las bacterias en las personas. 
 #esto lo puedo decir con toda confianza, puesto que ya se hizo todo el estudio de supuestos (Normalidad, Homocedasticidad e Independencia). 

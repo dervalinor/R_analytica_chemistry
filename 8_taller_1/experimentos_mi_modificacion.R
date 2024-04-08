@@ -166,8 +166,6 @@ if(p_valor_shapiro >= 0.05){
 #HOMOCEDASTICIDAD
 dev.off()#termina la división en la ventana de gráfico
 
-# Graficar el gráfico de residuos vs. valores ajustados y cambiar los títulos al español
-
 plot(modelobacterias, which = 1)
 
 
