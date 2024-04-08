@@ -3,6 +3,18 @@
 #del tratamiento. La variable respuesta fué el porcentaje de disminución de las
 #bacterias
 
+# Establecer el idioma de la sesión de R a español - Toco usar GIMP para editar las imagenes jajaja
+Sys.setlocale("LC_ALL", "es_ES.UTF-8")
+
+# Modificar los parámetros gráficos predeterminados
+par(
+  family = "sans",
+  cex.axis = 0.8,
+  cex.lab = 0.8,
+  cex.main = 0.9,
+  mgp = c(2, 0.5, 0)
+)
+
 #\begin{table}[ht]
 #\centering
 #\begin{tabular}{|l|*{9}{c|}} 
@@ -119,9 +131,19 @@ residualesd=residuals(modelobacterias)#para cada estudio de los supuestos se req
 residualesd#se llama a los residuales para observarlos en la consola, con ello se puede observar si la diferencia 
 #es aceptable
 par(mfrow=c(1,2))# se divide la ventana de gráfico en una fila y dos columnas
-plot(density(residualesd))#gráfico de distribución normal de los residuales de los datos
-plot(modelobacterias,which=2)#gráfico cuartil-cuartil de residuales para verificar que los datos si tengan una relación lineal 
-#en los graficos se observa que hay normalidad en el estudio, sin embargo, se va a hacer un test de shapiro para verificar la hipotesis
+
+#gráfico de distribución normal de los residuales de los datos
+# Graficar la densidad de los residuales y cambiar los títulos al español
+plot(density(residualesd))
+
+
+#gráfico cuartil-cuartil de residuales para verificar que los datos si tengan una relación lineal 
+#en los graficos se observa que hay normalidad en el estudio, sin embargo, se va a 
+#hacer un test de shapiro para verificar la hipotesis
+# Graficar el gráfico de cuartil-cuartil de los residuales y cambiar los títulos al español
+
+plot(modelobacterias, which = 2)
+
 resultado_shapiro = shapiro.test(residualesd)#realiza el test de shapiro con el cual se verifica que haya normalidad o no haya
 #Al realizar la prueba de shapiro las hipótesis serían
 #Hipótesis Nula= Hay normalidad
@@ -143,7 +165,14 @@ if(p_valor_shapiro >= 0.05){
 
 #HOMOCEDASTICIDAD
 dev.off()#termina la división en la ventana de gráfico
-plot(modelobacterias,which=1)#grafico de residuos contra los valores ajustados para verificar homocedasticidad siempre que no existan embudos de los residuales
+
+# Graficar el gráfico de residuos vs. valores ajustados y cambiar los títulos al español
+
+plot(modelobacterias, which = 1)
+
+
+#grafico de residuos contra los valores ajustados para verificar homocedasticidad 
+#siempre que no existan embudos de los residuales
 #como se observa en el grafico no hay formas de cono en los valores, aparentemente hay homocedasticidad. 
 #como hay normalidad se va a hacer el test de bartlett
 #install.packages("car")#instalación de paquete para poder realizar el test de bartlett o levene, según cual sea necesario
