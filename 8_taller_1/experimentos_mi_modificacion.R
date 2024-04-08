@@ -137,7 +137,7 @@ p_valor_shapiro = resultado_shapiro$p.value
 if(p_valor_shapiro >= 0.05){
   print(paste("Se acepta la hipotesis nula, entonces existe normalidad en el modelo con un p valor (p > 0.05): ", p_valor_shapiro))
 } else {
-  print("Se rechaza la hipotesis nula, entonces no existe normalidad")
+  print(paste("Se rechaza la hipotesis nula, entonces no existe normalidad con un p valor (p < 0.05): ", p_valor_shapiro))
 }
 
 
@@ -181,6 +181,9 @@ summary(modelobacterias)#de nuevo el p valor con el cual al verificar los supues
 
 
 #Interpretacion del ANOVA: 
+
+#Nota: El valor F es la relacion de la variabilidad entre los grupos y la variabilidad interna de cada grupo si F es alto
+#entonces existen diferencias significativas entre grupos.
 
 #Claro, vamos a interpretar paso a paso los resultados del ANOVA que se muestran en la terminal:
 
