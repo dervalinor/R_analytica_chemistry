@@ -49,10 +49,44 @@ boxplot(tiempos ~ empaques, col = c("#2EE689","#DF4BF3","#4BE2F3", "#DDD53E", "#
 
 #Programar esto a mano para estudiar bien esto!!!!
 
+#Prueba de contraste - Matrix de contrastes
+
+q1 = c(2,2,2, -3, -3)
+q2 = c(0,2,2,-2,-2)
+q3 = c(2,-1,-1,0,0)
 
 
+#ver si son ortogonales
+
+# Calculamos el producto interno entre todos los pares de contrastes
+contrastes <- list(q1, q2, q3)
+
+for (i in 1:(length(contrastes) - 1)) {
+  for (j in (i + 1):length(contrastes)) {
+    producto_interno <- sum(contrastes[[i]] * contrastes[[j]])
+    cat("Producto interno entre q", i, "y q", j, ": ", producto_interno, "\n") #poner un condicional para ver 
+    #si son ortogonales
+  }
+}
+
+#crear matriz de contrastes
+
+Matrix_contraste = matrix(c(q1, q2, q3),  nrow = 3, ncol = 5, byrow = TRUE)
+row.names(Matrix_contraste) = c("q1", "q2", "q3")
 
 
+#Prueba de Contrastes
+
+comp = glht(modelo_agua, linfct = mcp(empaques = Matrix_contraste))
+comp
+  
+#Ver metodos de Bonferroni y otro de la diapositivas
+Resumen_contrastes = summary(comp, test = adjusted("bonferroni"))
+Resumen_contrastes  
+
+#p-valor es muy alto por lo cual se acepta todas la hipotesis nulas
+
+#Prueba de Sheffe ver en las diapositivas !!!!
 
 
 
