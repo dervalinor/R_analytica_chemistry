@@ -63,7 +63,7 @@ attach(datosbacterias)#para rabajar el diseño completamente aleatorizados con c
 
 #2. Analisis descriptivos
 #vamos a hacer un analisis descriptivo
-boxplot(respuestas~metodos,data=datosbacterias,col=c("skyblue","yellow","green")
+boxplot(respuestas~metodos,data=datosbacterias,col=c("#2EE689","#DF4BF3","#4BE2F3")
         , xlab="Metodos", ylab="Respuestas", main="Experimento Bacterias")#realiza el grafico de cajas y 
         #bigotes con las cajas de colores y nombres de cada eje y el nombre del gráfico
 #en el boxplot se muestra que el metodo remolino tiene rango mas amplio de dispersion de datos y
