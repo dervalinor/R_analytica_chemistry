@@ -61,7 +61,10 @@ p_valor_shapiro <- resultado_shapiro$p.value
 
 # Homocedasticidad
 dev.off()
-plot(modelobacterias, which = 1)  # Gráfico de residuos contra valores ajustados
+plot(modelobacterias, which = 1)  
+#Para cambiar los nombres de los ejes quitar which y programar uno mismo los ejes x y x de los 
+#valores extrayendolos o creandolos por medio de tratamiento de variables
+# Gráfico de residuos contra valores ajustados
 
 # El p-valor de la prueba de Bartlett (p_valor_bartlett) es mayor que 0.05, lo que indica
 # que se acepta la hipótesis nula y se cumple el supuesto de homocedasticidad.
