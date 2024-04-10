@@ -1,4 +1,11 @@
+#install.packages("gmodels")
+library(gmodels)
+
 #compara distintos tratamientos, pruebas multiples, Análisis de contrastes ortogonales
+
+#Esta es un analisis estadistico para comparar distintos tratamientos de forma eficiente
+#y ver si existen diferencias entre los distintos tratamientos entre ellos
+#para este fin se requiere que existe ortogonalidad
 
 # Paso 1: Cargar los datos proporcionados
 # Definimos los vectores para cada tratamiento
@@ -61,8 +68,5 @@ for (i in 1:(length(contrastes) - 1)) {
     cat("Producto interno entre q", i, "y q", j, ": ", producto_interno, "\n")
   }
 }
-
-#install.packages("gmodels")
-library(gmodels)
 
 fit.contrast(anova, "azuc", Matrix_contraste)

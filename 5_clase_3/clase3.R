@@ -1,28 +1,33 @@
+library(agricolae)
+#la libreria agrocolae permite realizar analisis de ANOVA, comparacion de tratamientos y distintos
+#diseño de experimentos ademas de graficos para analisis estadisticos
 
-library(agricolae) 
-tratamientos <- c("T1", "T2", "T3", "T4") 
-
-
-tratamientos
-
-
-replicas = c(5, 5, 5, 5)
-replicas
+tratamientos <- c("T1", "T2", "T3", "T4") #definicion del vector para definir los tratamientos
+tratamientos #ver variable de tratamientos
 
 
-?design.crd 
-design.crd(tratamientos, replicas) 
+replicas = c(5, 5, 5, 5) #Indicar cuantas veces se repite cada tratamiento
+replicas 
 
 
+?design.crd #Dar informacion del manual de esta funcion 
 
+#Esta funcion sirve para generar un diseño completamente aleotorizado es decir que de
+#forma aleatoria a cualquier unidad experimental se le puede aplicar cualquier tratamiento
+#sin preferencias o sesgos, esto se hace para evitar inclinaciones que distorcionen el 
+#resultado
+#seed = 20 genera un patron aleatorio para poder asigenar tratamientos a cada unidad experimental
 design.crd(tratamientos, replicas, seed = 20)
+
+#es decir cada tratamiento sera aplicado 5 veces a cualquier unidad experimental 
+#de forma aleatorio sin referencias
 
 mi_tabla <- design.crd(tratamientos, replicas, seed = 20)
 mi_tabla
 
  
-tabla_diseno <- mi_tabla$book
-
+tabla_diseno <- mi_tabla$book #aceder a la tabla de mi objeto de mi_tabla
+tabla_diseno
 
 
 set.seed(1010)
@@ -36,6 +41,7 @@ respuestas
 plot(density(respuestas))
 tabla_diseno$respuestas = respuestas 
 tabla_diseno
+
 
 attach(tabla_diseno)
 
@@ -107,12 +113,9 @@ plot(modelo, which = 1) #en que caso hay homocedasticidad
 
 bartlett.test(Respuestas ~ Tratamientos, data = tabla_diseno) #hipotesis: existe homocedasticidad y A: existe heterocedasticidad
 
-#test de Leven - se usa cuando no hay normalidad - buscar pruebas robustas
+#test de Levene - se usa cuando no hay normalidad - buscar pruebas robustas
 #install.packages("car")
 library(car)
-
-levene
-
-levene.test(Respuestas ~ Tratamientos, data = tabladiseno)
+leveneTest(Respuestas ~ Tratamientos, data = tabla_diseno)
 
 plot(1:20, residuos)
