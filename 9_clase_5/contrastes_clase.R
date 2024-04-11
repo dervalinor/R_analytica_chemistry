@@ -180,3 +180,12 @@ for (i in 1:length(p_values)) {
     cat("Contraste", i, ": No se puede rechazar la hipótesis nula, si hay diferencias significativas entre tratamientos.\n")
   }
 }
+
+#conclusion: Las pruebas de hpótesis para los contrastes expresadas como H 0 : Q i = 0 contra
+#H 1 : Q i ̸= 0 son altamente significativas (p < 0, 01), excepto para Q 4 .
+
+#CREAR UN FUNCION!!!
+#una función en R que genere constantes con la propiedad de que su suma sea igual a cero. La función debe 
+#recibir como parámetro el número de constantes que se desean generar. Estas constantes deben ser 
+#diferentes de cero, pero su suma total debe ser igual a cero. Por favor, 
+#piensa en el proceso paso a paso y asegúrate de que las constantes cumplan con estas condiciones
