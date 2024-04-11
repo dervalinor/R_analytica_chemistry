@@ -1,5 +1,5 @@
-#vamos a crear un funcion que nos permita crear contrastes entre tratamientos
-#donde los coefientes su suma sea sero en un combinacion lineal de las medias al
+
+
 #comparar tratamientos
 
 control<-c(75,67,70,75,65,71,67,67,76,68)
