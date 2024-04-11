@@ -1,3 +1,5 @@
+#Este es mi codigo editado por mi con AI pero no puede esta bien
+
 #install.packages("gmodels")
 library(gmodels)
 
@@ -5,7 +7,15 @@ library(gmodels)
 
 #Esta es un analisis estadistico para comparar distintos tratamientos de forma eficiente
 #y ver si existen diferencias entre los distintos tratamientos entre ellos
-#para este fin se requiere que existe ortogonalidad
+#para este fin se requiere que existe ortogonalidad, es decir que 
+#cada tratamiento se independiente de otros y que no se vean afectados por 
+#los demas y tampoco que no se vean afectados por sus comparaciones
+
+#Deben ser ortogonoles ya que nos aportarian informacion unica y relevente, es decir
+#al ser linealmente independientes no redundan en la informacion dada.
+
+#Los contrastes son la combinacion lineal de la media de los tratamientos que se comparan
+#donde las constantes de esta combinacion nos da como difieren los metodos entre si
 
 # Paso 1: Cargar los datos proporcionados
 # Definimos los vectores para cada tratamiento
