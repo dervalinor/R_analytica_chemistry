@@ -1,4 +1,4 @@
-install.packages("agricolae")#se necesita instalar el paquete donde se puede realizar los estudios del Diseño Completamente Aleatorizados.
+#install.packages("agricolae")#se necesita instalar el paquete donde se puede realizar los estudios del Diseño Completamente Aleatorizados.
 require(agricolae)#al finalizar la instalación del paquete se llama el paquete para identificar con cual se va a trabajar
 metodos=rep(c("remolino","duchado","pies"),c(9,9,9))#se introduce una columna de datos en este caso el nombre de cada método y se señala cuantos datos tendrá la columna(9)
 metodos#se verifica que se haya insertado correctamente la columna 
