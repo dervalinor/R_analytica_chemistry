@@ -1,5 +1,17 @@
 #Pruebas no parametricas
 
+#Las pruebas no parametricas se utilizan cuando un conjunto de datos
+#no cumplen los supuestos de normalidad, homocedasticidad o independencia
+
+#para esta caso no se cumplen los supuestos ni de normalidad ni homocedasticidad
+#en este experimento entonce se realiza la prueba no parametrica de  Kruskal-Wallis
+
+#Prueba de Kruskal-Wallis
+
+#Es la version del ANOVA pero en pruebas no parametricas y se utiliza cuando
+#los datos no cumplen los supuestos de normalidad y homocedasticidad como es 
+#en este caso.
+
 #En un estudio de diferentes empaques para la carne, Gómez y González(1991)
 #realizaron una prueba microbiológica y contabilizaron el número de
 #mesófilos en las diferentes muestras analizadas. Los resultados se pre-

@@ -10,7 +10,8 @@
 #T5 = 10, 10, 10, 20, 0
 #T6 = 30, 40, 40, 40, 10
 
-#analizar Si los empaques afecta el Número de mesófilos en cada una de las diferentes envolturas.
+#analizar Si los empaques afecta el Número de mesófilos 
+#en cada una de las diferentes envolturas.
 #Evalúe los supuestos de normalidad y homogeneidad de varianzas
 
 # Datos de las muestras
@@ -51,6 +52,7 @@ plot(density(residuals(anova_result)))
 plot(anova_result, which = 2)
 
 # Gráfico para evaluar homogeneidad de varianzas
+dev.off()
 plot(anova_result, which = 1)
 
 
