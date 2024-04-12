@@ -113,10 +113,22 @@ rownames(L)=c("Q1","Q2","Q3","Q4")
 ##ortogonalidad funciona cuando los contrastes sean ortogonales
 #mejor esto hacer en un for con un condicional
 
+#Codigo del profesor
+
+sum(q1*q2)
+sum(q1*q3)
+sum(q1*q4)
+sum(q2*q3)
+sum(q2*q4)
+sum(q3*q4)
+
+#Mi codigo
+
 contrastes <- list(q1, q2, q3, q4)
 
-for (i in 1:(length(contrastes) - 1)) {
-  for (j in (i + 1):length(contrastes)) {
+for (i in 1:(length(contrastes) - 1)) {  #Este ciclo for recorre todos los contrastes, excepto el último.
+  for (j in (i + 1):length(contrastes)) { #Este ciclo for recorre todos los contrastes a partir del i-ésimo, 
+    #es decir, compara cada contraste con todos los demás que vienen después de él.
     producto_interno <- sum(contrastes[[i]] * contrastes[[j]])
     cat("Producto interno entre q", i, "y q", j, ": ", producto_interno, "\n")
     if(producto_interno == 0){
@@ -126,6 +138,9 @@ for (i in 1:(length(contrastes) - 1)) {
     }
   }
 }
+
+#Pero en este caso q2 y q3 no son ortogonales por ende debe hacer un analisis secuencia o jerarquico !!!!!
+
 
 #Mi idea: Vamos a intentar entender este codigo viendo a que es igual al sumatorioa de medias 
 #coeficientes y la suma de estos coeficientes y por que debe ser asi
