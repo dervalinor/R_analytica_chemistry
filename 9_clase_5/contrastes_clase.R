@@ -181,8 +181,8 @@ for (i in 1:length(p_values)) {
   }
 }
 
-#conclusion: Las pruebas de hpótesis para los contrastes expresadas como H 0 : Q i = 0 contra
-#H 1 : Q i ̸= 0 son altamente significativas (p < 0, 01), excepto para Q 4 .
+#conclusion: Las pruebas de hpótesis para los contrastes expresadas como H 0 : Qi = 0 contra
+#H 1 : Q i != 0 son altamente significativas (p < 0, 01), excepto para Q 4 .
 
 #CREAR UN FUNCION!!!
 #una función en R que genere constantes con la propiedad de que su suma sea igual a cero. La función debe 
