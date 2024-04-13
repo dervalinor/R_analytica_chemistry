@@ -5,7 +5,7 @@
 #varias repeticiones se perdieron. Los métodos de almacenamiento y
 #los resultados obtenidos se dan en porcentajes en la siguiente tabla
 
-
+#1. Se desea comparar materiales- Icopor y Shopak - y tiempos
 
 icoportres<-c(7.8,8.3,7.6,8.4,8.3)
 icopordiez<-c(5.4,7.4,7.1)
@@ -76,6 +76,7 @@ row.names(Matrix_contraste) = c("q1", "q2", "q3")
 
 
 #Prueba de Contrastes
+library(multcomp)
 
 comp = glht(modelo_agua, linfct = mcp(empaques = Matrix_contraste))
 comp
