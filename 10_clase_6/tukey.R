@@ -169,6 +169,7 @@ for (i in 1:length(pvalores_dunnett)) {
   }
 }
 
+
 #Grafica de la prueba de Dunnet
 plot(resumen_dunnet) #solo una tiene diferencias entre ellas
 #he incluyendo el control
