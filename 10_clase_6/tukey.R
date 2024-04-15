@@ -120,7 +120,9 @@ plot(prueba_tukey, las = 2, cex.axis = 0.4)
 
 #Prueba de Dunnet
 
-
+#Esta prueba permite hacer comparaciones de los tratamientos o grupos con el
+#control (Muestra no sometido a ningun tratamiento) y ver si existen
+#diferencias significativas entre algunos tratamientos y el control
 
 #install.packages("mvtnorm")
 #install.packages("multcomp")
@@ -134,9 +136,46 @@ library("survival")
 # Crear el objeto de contraste de Dunnett
 dunnett_prueba = glht(modeloesp, linfct = mcp(soluciones = "Dunnett"), alternative = "two.sided")
 resumen_dunnet = summary(dunnett_prueba)
+resumen_dunnet
+
+# Obtener los p-valores de la prueba de Dunnett
+pvalores_dunnett <- summary(dunnett_prueba)$test$pvalues
+
+
+# Obtener los nombres de los tratamientos (excepto el control)
+nombres_tratamientos <- rownames(resumen_dunnet$test)[-1]
+
+# Definir el nivel de significancia (comúnmente 0.05)
+alpha <- 0.05
+
+#nombres de los tratamientos
+nombres_tratamientos <- levels(datojesp$soluciones)[-1]
+nombres_tratamientos
+
+for (i in 1:length(pvalores_dunnett)) {
+  # Obtener el nombre del tratamiento actual
+  nombre_tratamiento <- nombres_tratamientos[i]
+  
+  # Obtener el p-valor ajustado actual
+  pvalor <- pvalores_dunnett[i]
+  
+  # Realizar la comparación con el control
+  if (pvalor < alpha) {
+    # Si el p-valor es menor que el nivel de significancia
+    cat("El tratamiento", nombre_tratamiento, "- AAAAcontrol difiere significativamente del control.\n")
+  } else {
+    # Si el p-valor es mayor o igual que el nivel de significancia
+    cat("El tratamiento", nombre_tratamiento, "- AAAAcontrol no difiere significativamente del control.\n")
+  }
+}
 
 #Grafica de la prueba de Dunnet
-plot(resumen_dunnet) #solo una tiene diferencias entre ellas he incluyendo el control
+plot(resumen_dunnet) #solo una tiene diferencias entre ellas
+#he incluyendo el control
+#Si el intervalo de confianza no se cruza con la linea vertical
+#en cero, eso indica que existe diferencias significativas entre
+#los tratamientos y el control para esta caso se observa diferencias
+#significativas entre CPPU contra el tratamiento.
 
 #Hipotesis de la prueba de Dunnet
 #Hipotesis nula: cada tratamiento es igual al control
