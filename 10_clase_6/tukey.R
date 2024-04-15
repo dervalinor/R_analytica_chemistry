@@ -57,10 +57,57 @@ if(p_valor_aov >= 0.05){
 }
 
 #prueba de Tukey
-prueba_tukey = TukeyHSD(modeloesp)
-prueba_tukey
+#Es metodo compara parejas de medias y ver si existen diferencias significativas entre ellas
+#elegir la hipotesis correcta y no elegir
+#alguna debido solo por el azar, es para hacer comparaciones de pares.
+#el metodo de Tukey nos dice si las diferencias observadas son mayores que las que
+#se esperaria por azar.
+#Da un forma de diferenciar las diferencias significativa a las debidas por el azar
 
-plot(prueba_tukey, las = 2, cex.axis = 0.4) #raya punteada justo en cero
+prueba_tukey = TukeyHSD(modeloesp)
+prueba_tukey #el p valor se compara con el nivel se significancia 0.05 por lo general
+
+# Acceder a los valores-p
+p_valores_tukey = prueba_tukey[["soluciones"]][, "p adj"]
+p_valores_tukey
+
+# Acceder a los valores-p
+p_valores_tukey = prueba_tukey[["soluciones"]][, "p adj"]
+
+# Acceder a los nombres de los tratamientos
+nombres_tratamientos = rownames(prueba_tukey[["soluciones"]])
+
+# Definir el nivel de significancia
+alpha = 0.05
+
+# Comparar los valores-p con el nivel de significancia
+for (i in 1:length(p_valores_tukey)) {
+  tratamiento1 = strsplit(nombres_tratamientos[i], "-")[[1]][1]
+  tratamiento2 = strsplit(nombres_tratamientos[i], "-")[[1]][2]
+  
+  if (p_valores_tukey[i] < alpha) {
+    cat("La diferencia entre el tratamiento", tratamiento1, "y el tratamiento", tratamiento2, "es estadísticamente significativa (p-valor =", 
+        round(p_valores_tukey[i], 4), ")\n")
+  } else {
+    cat("La diferencia entre el tratamiento", tratamiento1, "y el tratamiento", tratamiento2, "no es estadísticamente significativa (p-valor =", 
+        round(p_valores_tukey[i], 4), ")\n")
+  }
+}
+
+plot(prueba_tukey, las = 2, cex.axis = 0.4) 
+
+#Las lineas horizontales el intervalo de confianza del 95% para la diferencia entre dos medias de 
+#tratamientos no intercepta el valor cero, entonces se considera que hay una 
+#diferencia estadísticamente significativa entre esos dos tratamientos al nivel de confianza del 95%.
+
+#Algunas pautas clave para interpretar el gráfico de la prueba de Tukey:
+  
+#Si el intervalo de confianza NO cruza el cero, hay una diferencia significativa entre esos dos tratamientos.
+#Cuanto más alejado del cero esté el intervalo de confianza, mayor será la diferencia significativa.
+#Si el intervalo de confianza cruza el cero, no hay evidencia suficiente para afirmar que existe una 
+#diferencia significativa entre esos dos tratamientos.
+
+#raya punteada justo en cero
 #es un grafico de un intervalo de confianza y los no que tocan el valor cero indica que hay
 #diferencias estadisticas de los tratamientos para este caso CPPU-ABA
 
@@ -69,7 +116,12 @@ plot(prueba_tukey, las = 2, cex.axis = 0.4) #raya punteada justo en cero
 #H  que la media de i es igual a media de j
 #A que la media de i es diferente de media de j
 
+
+
 #Prueba de Dunnet
+
+
+
 #install.packages("mvtnorm")
 #install.packages("multcomp")
 #install.packages("survival")
@@ -89,18 +141,3 @@ plot(resumen_dunnet) #solo una tiene diferencias entre ellas he incluyendo el co
 #Hipotesis de la prueba de Dunnet
 #Hipotesis nula: cada tratamiento es igual al control
 #Hipotesis alternativa: al menos alguno de los tratamientos es diferente al control
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
