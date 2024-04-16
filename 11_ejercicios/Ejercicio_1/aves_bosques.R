@@ -1,3 +1,11 @@
+#librerias
+library(car)
+library(agricolae)
+library(gmodels)
+library(mvtnorm)
+library(multcomp)
+library(survival)
+
 #Madrigal y Serna(1978) compararon la población de aves en cuatro áreas de
 #bosques diferentes : un rodal de ciprés (RC), un bosque secundario al noroeste
 #(BSN), una plantación de pinos patula (PP) y un bosque secundario aislado (BSA)
