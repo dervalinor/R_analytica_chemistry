@@ -85,6 +85,13 @@ if(p_levene_valor >= 0.05){
 #Puede que se arregle un poco la normalidad
 
 datosmesofilos$rt=log(datosmesofilos$respuestas+1)
+datosmesofilos
+
+#similar a decir
+
+datos_mesofilo_trans = log(respuestas + 1)
+datos_mesofilo_trans
+
 attach(datosmesofilos)
 datosmesofilos
 modelomesot=aov(rt~tratamientos,data=datosmesofilos)
@@ -100,6 +107,18 @@ shapiro.test(residualesmesot)
 dev.off()
 plot(modelomesot,which=1)
 leveneTest(rt~factor(tratamientos),data=datosmesofilos)
+
+#Test de Bartlett:
+  
+#Se utiliza cuando los datos siguen una distribución normal.
+#Es sensible a las desviaciones de la normalidad.
+#Si los datos no son normales, el test de Bartlett puede ser engañoso y perder potencia.
+
+#Test de Levene:
+  
+#Es un test no paramétrico, lo que significa que no asume normalidad en los datos.
+#Es más robusto a las desviaciones de la normalidad que el test de Bartlett.
+#Se recomienda utilizar el test de Levene cuando los datos no siguen una distribución normal o cuando se desconoce si cumplen con la normalidad.
 
 summary(modelomesot)
 #El tipo de empaque no afecta el número de mesofilos

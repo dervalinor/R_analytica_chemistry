@@ -167,10 +167,9 @@ if(p_valor_shapiro >= 0.05){
 dev.off()#termina la división en la ventana de gráfico
 
 plot(modelobacterias, which = 1)
-
-
 #grafico de residuos contra los valores ajustados para verificar homocedasticidad 
 #siempre que no existan embudos de los residuales
+
 #como se observa en el grafico no hay formas de cono en los valores, aparentemente hay homocedasticidad. 
 #como hay normalidad se va a hacer el test de bartlett
 #install.packages("car")#instalación de paquete para poder realizar el test de bartlett o levene, según cual sea necesario
