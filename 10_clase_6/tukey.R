@@ -129,9 +129,9 @@ plot(prueba_tukey, las = 2, cex.axis = 0.4)
 #install.packages("survival")
 
 #Como cargar varias librerias en un sola linea de codigo
-library("mvtnorm")
-library("multcomp")
-library("survival")
+library(mvtnorm)
+library(multcomp)
+library(survival)
 
 # Crear el objeto de contraste de Dunnett
 dunnett_prueba = glht(modeloesp, linfct = mcp(soluciones = "Dunnett"), alternative = "two.sided")

@@ -28,3 +28,14 @@ Shopak = c(2.41, 2.83, 2.97, 2.38, 2.11)
 
 #Cargando datos de tipo de envoltura y porcentaje de perdida de peso en cada envoltura
 tratamientos_envolturas = rep(c("Icopor", "Biopak", "Cry_o_vac", "Shopak"), each = 5)
+
+perdida_peso = c(Icopor, Biopak, Cry_o_vac, Shopak)
+envolturas = factor(tratamientos_envolturas)
+modelo = aov(perdida_peso ~ envolturas)
+summary(modelo)
+
+
+#Intervalo de confianza
+confint(modelo, "envolturas", level = 0.95)
+
+dev.off()
