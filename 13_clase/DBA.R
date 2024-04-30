@@ -44,5 +44,4 @@ modelo_DBA <- aov(dureza_DBA ~ punta_DBA + bloque_DBA, data = df_DBA)
 # Mostrar el resumen del análisis
 summary(modelo_DBA)
 
-
 #Debe dar en este problema F 30.90 y eficiencia relativa 8.15
