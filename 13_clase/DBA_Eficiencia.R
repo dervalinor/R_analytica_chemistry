@@ -131,8 +131,8 @@ if(p_valor_DCA >= 0.05){
 Mean_sq_DBA = resumen_aov_DBA[[1]][["Mean Sq"]][3]
 Mean_sq_DBA
 
-Df_resi_DBA = resumen_aov_DBA[[1]][["Df"]][3]
-Df_CBA #grados de libertad de los tratamientos
+Df_DBA = resumen_aov_DBA[[1]][["Df"]][3]
+Df_DBA #grados de libertad de los tratamientos
 
 #suma de cuadrados y grados de libertad de DCA
 Mean_sq_DCA = resument_aov_DCA[[1]][["Mean Sq"]][2]
@@ -140,13 +140,13 @@ Mean_sq_DCA #accediendo a la suma de los cuadrados de los
 #residuos
 
 #accediendo a los grados de libertad de residuos
-Df_resi_DCA = resument_aov_DCA[[1]][["Df"]][2]
+Df_DCA = resument_aov_DCA[[1]][["Df"]][2]
 Df_DCA
 
 #eficiencia 
 
-M1 = (Df_CBA+1)*(Df_DCA+3)*Mean_sq_DCA
-M2= (Df_CBA+3)*(Df_DCA+1)*Mean_sq_DBA
+M1 = (Df_DBA+1)*(Df_DCA+3)*Mean_sq_DCA
+M2= (Df_DBA+3)*(Df_DCA+1)*Mean_sq_DBA
 
 Eficiencia = M1/M2
 Eficiencia
@@ -164,10 +164,28 @@ Porcentaje_reduccion
 
 
 #HACER DIAGNOSTICO DE DBA - PRUEBA DE ADITIVIDAD
+
+
 #install.packages("daewr")
 library(daewr)
 
-#Prueba de de aditividad 
+#Prueba de de aditividad - sirve para saber si existe interaccion entre los 
+#bloaues y los tratamientos ya que el modelo de bloques supone que no existe
+#tal interaccion, en este caso la hipotesis nula es que no hay interaccion
+#entre los bloques y los tratamientos
+
+#Hipotesis nula: y_{ij} = μ + τ_{i} + β_{j} + ε_{ij}
+#Hipotesis alternativa: y_{ij} = μ + τ_{i} + β_{j} + (τβ)_{ij} + ε_{ij}
+
+#donde:
+  
+#y_{ij} es la observación en el tratamiento i y el bloque j
+#μ es la media general
+#τ_{i} es el efecto del tratamiento i
+#β_{j} es el efecto del bloque j
+#ε_{ij} es el error aleatorio
+#(τβ)_{ij} representa el término de interacción entre el tratamiento i y el bloque j.
+
 ?Tukey1df 
 
 #Todos en el primer parametro debe ser la respuesta, luego tratamiento y bloques
@@ -182,8 +200,10 @@ attach(datos_ratas)
 Tukey1df(datos_ratas) #la hipotesis nula no se puede rechazar, 
 #es decir hay adividad
 
+#otra forma de hacer la prueba de aditividad
+
 #install.packages("asbio")- Solucionar error !!!!!
-#require(asbio)
-#tukey.add.test(datos_ratas) #prueba de adividad
+library(asbio)
+tukey.add.test(datos_ratas) #prueba de adividad
 
-
+#otra forma de hacer la prueba de aditividad
