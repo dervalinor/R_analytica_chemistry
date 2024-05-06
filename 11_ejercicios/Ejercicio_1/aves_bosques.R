@@ -132,6 +132,7 @@ attach(datos_trans)
 
 prueba_anova_trans = aov(respuestas_trans ~ bosques_aves, data = datos_trans)
 resumen_aov_trans = summary(prueba_anova_trans)
+resumen_aov_trans
 
 p_valor_aov_trans = resumen_aov_trans[[1]][["Pr(>F)"]][1]
 p_valor_aov_trans
