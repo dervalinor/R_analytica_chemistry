@@ -2,6 +2,10 @@
 #de error, aqui se puede controlar dos factores una extension de diseño de 
 #bloques.
 
+#Este modelo se caracteriza por organizar los elementos en una cuadricula
+#donde en cada fila y columna solo se repita un tipo de elemento una sola
+#vez
+
 library(agricolae)
 
 ?design.lsd
@@ -10,7 +14,9 @@ library(agricolae)
 
 tratamientos <- paste("T", 1:4, sep = "")
 
-disenolsd = design.lsd(tratamientos, seed = 1010)
+disenolsd = design.lsd(tratamientos, seed = 1010) # em este diseño se controla 
+#dos factores que no son de nuestro interes pero que si afectan nuestra 
+#respuesta de nuestra variable respuesta.
 
 disenolsd
 

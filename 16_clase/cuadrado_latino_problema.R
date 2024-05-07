@@ -63,7 +63,11 @@ modelo <- aov(respuestas ~ tratamientos + filas + columnas, data = datos_medic)
 #en los tratamientos es decir el medicamentos no efecta como se da
 #los demas no se interpretan pero las pruebas F de filas y columnas
 # si f < 1 nos indica que no fueron significativos los bloques se 
-#Puede hacer un DCA
+#lo cual indica que hacer un analisis por un LSD no era necesarion solo
+#hacer un DCA
+
+#un f bajo indica que no hay efecto significativos del tratamiento o factores 
+#sobre la variable respuesta
 
 summary(modelo)
 
