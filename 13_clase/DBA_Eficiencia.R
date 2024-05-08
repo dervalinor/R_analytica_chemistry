@@ -189,7 +189,7 @@ library(daewr)
 ?Tukey1df 
 
 #Todos en el primer parametro debe ser la respuesta, luego tratamiento y bloques
-#deben ser factores
+#para estos tratamientos y bloques deben ser factores
 Tratamientos_rt = factor(Tratamientos_rt)
 Bloques_rt = factor(Bloques_rt)
 

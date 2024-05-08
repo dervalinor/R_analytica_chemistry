@@ -44,6 +44,7 @@
 library(agricolae)
 
 razas = rep(c("R1", "R2"), each = 12)
+razas
 concentraciones = rep(rep(c("C1", "C2", "C3", "C4"), each = 3), 2)
 respuestas = c(60, 55, 52, 44, 37, 54, 46, 51, 63, 31, 57, 
                66, 37, 43, 50, 63, 59, 54, 30, 38, 38, 51, 50, 41)

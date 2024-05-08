@@ -69,3 +69,12 @@ library(daewr)
 
 #Prueba de de aditividad 
 ?Tukey1df 
+
+#para la prueba de aditividad debemos convertir las variables y
+#bloques en una variable de factor o variable categorica es 
+#decir cualitiva
+
+tratamientos = factor(tratamientos)
+bloques = factor(bloques)
+
+#luego debemos hacer la toma de datos para obtener la variable respuesta

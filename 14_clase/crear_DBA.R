@@ -31,5 +31,5 @@ matrizdiseno
 
 #ver tabla de tratamiento y bloques en forma de una matriz eje x son los 
 #tratamientos y eje y son los bloques
-disenobloques$sketch #existe hay aleotarizacion de los
+disenobloques$sketch #existe hay aleotarizacion en cada
 #bloques
