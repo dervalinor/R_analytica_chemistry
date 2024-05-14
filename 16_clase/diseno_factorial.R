@@ -42,12 +42,13 @@
 #\end{tabular}
 
 library(agricolae)
+library(car)
 
 razas = rep(c("R1", "R2"), each = 12)
 razas
 concentraciones = rep(rep(c("C1", "C2", "C3", "C4"), each = 3), 2)
-respuestas = c(60, 55, 52, 44, 37, 54, 46, 51, 63, 31, 57, 
-               66, 37, 43, 50, 63, 59, 54, 30, 38, 38, 51, 50, 41)
+respuestas = c(60,55,52,44,37,54,46,51,63,31,57,66,
+               37,43,50,63,59,54,30,38,38,51,50,41)
 length(respuestas)
 
 datos_razas = data.frame(respuestas, razas, concentraciones)
@@ -55,7 +56,12 @@ attach(datos_razas)
 
 #segun la inteligence artificial: 
 
-modelo <- aov(respuestas ~ razas * concentraciones, data = datos_razas)
+modelo <- aov(respuestas ~ razas * concentraciones, data = datos_razas) 
+#El mismo codigo del profesor
+
+#Profesor: cuando la interaccion de da significativa debe ser intrepretada
+#los dos primero p valores son irrelevantes, concentrarse en el p valor
+#de la interaccion
 
 summary(modelo) #Si este es correcto segun la diapositiva del profesor !!!!!
 
@@ -64,7 +70,47 @@ print(resumen)
 
 ?LSD.test
 
+dev.off()
+
+#Grafico de interaccion
 interaction.plot(razas, concentraciones, respuestas, legend = TRUE, 
                  xlab = "Raza", ylab = "Mortalidad (%)", 
                  trace.label = "Concentración")
 ?interaction.plot
+
+interaction.plot(razas, concentraciones, respuestas, legend = TRUE, 
+                 xlab = "Raza", ylab = "Mortalidad (%)", 
+                 trace.label = "Concentración")
+#Hay 8 tratamientos
+
+#Forma del profesor para hacer el grafico:
+
+with(datos_razas, interaction.plot(razas, concentraciones, respuestas, type = "b",
+                                   pch = c(18,22, 19, 5), leg.bty = "o", xlab = "Raza", ylab = "Mortalidad (%)", 
+                                   trace.label = "Concentración", main = "Grafico de Interacción"))
+
+with(datos_razas, interaction.plot(concentraciones,razas,respuestas,type="b",pch=c(17,23,1,3),leg.bty = "o"))
+#grafico de razas y respuestas
+
+#normalidad
+plot(density(residuals(modelo)))
+shapiro.test(residuals(modelo))
+
+#evaluar homocedasticidad en tada los tratamientos es decir en cada fila y columna
+plot(modelo,which=1)
+bartlett.test(split(respuestas, list(razas, concentraciones)))
+
+#Graficas en ggplot2
+library(ggplot2)
+library(dplyr)
+
+datos_resumen = datos_razas%>%
+  group_by(razas, concentraciones)%>%summarize(media = mean(respuestas))
+datos_resumen
+#agrupar los datos por razas y por concentraciones y sacear la media de las
+#respuestas
+
+ggplot(datos_resumen, aes(x = concentraciones, y = media, group = razas, colour = razas)) +
+      geom_line(size = 0.8) + 
+      scale_color_brewer(palette = "Set 1")
+      

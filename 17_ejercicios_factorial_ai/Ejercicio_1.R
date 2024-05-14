@@ -57,6 +57,17 @@ attach(datos_emisiones)
 
 modelo_emisiones = aov(emisiones_co ~ addicion_etanol * aire_combustible, 
                        data = datos_emisiones)
+#en el ANOVA obtener tres p valores los cuales el primero es para el addicion de
+#etanol, el segundo para la relacion aire-combustible y el tercero es la 
+#interaccion entre adicion de etanol y combustible, como todos los valores
+#de son menores al 0.05 entonces existen efectos significativos de la
+#adicion de etanol, relacion aire-combustible y la interaccion entre ellos
+#en la emisiones de CO.
+
+#hacer condicionales para comprobacion
+
+#hacer analisis de supuestos de ANOVA para ver si lo resultados son fiables
+
 summary(modelo_emisiones) #el mismo resultado que el profesor en el pdf
 
 dev.off()
@@ -65,3 +76,9 @@ dev.off()
 interaction.plot(addicion_etanol, aire_combustible, emisiones_co,
                  xlab = "Adiciones Etanol", ylab = "Aire/Combustible",
                  trace.label = "Emisiones de CO")
+#El grafico de interaccion muestra que las emisiones de CO son mas pronunciadas
+#cuando los niveles de aire combustible son baja es decir 14 y 15 al agregar
+#etanol pero al agregar etanol en una relacion alta de aire combustible esta
+#adicion no afecta mucho a las emisiones de CO
+#como las lineas se cruzan indican una interaccion entre los factores los cual
+#causan de manera conjunta las emisiones de CO.
