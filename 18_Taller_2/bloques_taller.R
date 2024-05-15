@@ -4,9 +4,15 @@ library(daewr)
 
 # Importar datos
 
-Tratamiento = factor(rep(c("Droga A", "Droga B", "Placebo"), times = 7))
-Bloque = factor(rep(1:7, each = 3))
-Respuesta = c(6.0, 6.1, 5.4, 4.8, 6.9, 4.0, 6.9, 6.5, 7.0, 6.4, 5.6, 5.8, 5.5, 3.9, 3.5, 9.0, 7.0, 7.6, 6.8, 5.4, 5.5)
+Tratamiento = rep(c("Droga A", "Droga B", "Placebo"), times = 7)
+Bloque = rep(1:7, each = 3)
+Respuesta = c(6.0, 6.1, 5.4, 
+              4.8, 6.9, 4.0, 
+              6.9, 6.5, 7.0, 
+              6.4, 5.6, 5.8, 
+              5.5, 3.9, 3.5, 
+              9.0, 7.0, 7.6, 
+              6.8, 5.4, 5.5)
 
 datos <- data.frame(Respuesta, Tratamiento, Bloque)
 
@@ -40,13 +46,45 @@ attach(datos)
 #  Existe interacción entre los bloques y los tratamientos.
 #(τβ)_ij ≠ 0 para al menos un par i, j
 
-prueba_aditividad = Tukey1df(datos)
-resumen_aditividad = summary(prueba_aditividad)
-resumen_aditividad
+#Podemos suponer un diseño factorial para verificar si existen interacciones
+#entre bloques y tratamientos
 
-p_valor_no_aditividad <- resumen_aditividad$"Pr>F"[4]
+modelo_fac = aov(Respuesta ~ Tratamiento*Bloque, data = datos)
+resumen_fac = summary(modelo_fac)
 
-modelo <- aov(Respuesta ~ Tratamiento + Bloque, data = datos)
+p_valor_fac = resumen_fac[[1]][["Pr(>F)"]][3]
+
+if(p_valor_fac >= 0.05){
+  cat("Se acepta la hipotesis nula, NO existen interacciones entre los
+      bloques y los tratamientos: ", p_valor_fac)
+} else {
+  cat("Se rechaza la hipotesis nula, SI existen interacciones
+      entre bloques y tratamientos: ", p_valor_fac)
+}
+
+#O tambien solo haciendo la prueba de aditividad
+#convertir a factor las tratamientos y bloques
+
+Tratamiento = factor(Tratamiento)
+Bloque = factor(Bloque)
+
+datos_adt <- data.frame(Respuesta, Tratamiento, Bloque)
+
+attach(datos_adt)
+
+Tukey1df(datos_adt) #no existen interacciones entre los bloques y 
+#tratamientos, no se rechaza la hipotesis nula
+
+#Entonces hacemos un analisis por medio de un diseño de 
+#bloques al azar
+
+modelo_dba = aov(Respuesta ~ Tratamiento + Bloque, data = datos_adt)
+resumen_modelo_dba = summary(modelo_dba)
+resumen_modelo_dba
+
+#Ahora vamos a calcular la eficiencia de esta modelo vs un DCA
+
+modelo = aov(Respuesta ~ Tratamiento, data = datos_adt)
 resumen_modelo = summary(modelo)
 resumen_modelo
 
@@ -60,42 +98,43 @@ if(p_valor_aov >= 0.05){
       diferencias significativas: ", p_valor_aov)
 }
 
-# Evaluación de supuestos
+# Evaluación de supuestos - cambiar para la evalucion de DBA
 # 1. Normalidad
-par(mfrow = c(1, 2))  # Dividir la ventana gráfica en dos paneles
-plot(density(residuals(modelo)))  # Gráfico de densidad de residuos
-qqnorm(residuals(modelo))  # Gráfico de cuantiles normales
-qqline(residuals(modelo), col = "red")  # Línea de referencia
+par(mfrow = c(1, 2))# Dividir la ventana gráfica en dos paneles
+plot(density(residuals(modelo_dba)))  # Gráfico de densidad de residuos
+qqnorm(residuals(modelo_dba))  # Gráfico de cuantiles normales
+qqline(residuals(modelo_dba), col = "red")  # Línea de referencia
 
-resultado_shapiro = shapiro.test(residuals(modelo))  # Prueba de Shapiro-Wilk
+resultado_shapiro = shapiro.test(residuals(modelo_dba))  # Prueba de Shapiro-Wilk
+resultado_shapiro
 
 p_valor_shapiro = resultado_shapiro$p.value
 
 if(p_valor_shapiro >= 0.05){
-  print(paste("Se acepta la hipotesis nula, entonces existe normalidad en el modelo con un p valor (p > 0.05): ", p_valor_shapiro))
+  print(paste("Se acepta la hipotesis nula, entonces existe normalidad en el modelo con un p valor (p > 0.05): ", p_valor_shapiro,
+              "\n"))
 } else {
-  print(paste("Se rechaza la hipotesis nula, entonces no existe normalidad con un p valor (p < 0.05): ", p_valor_shapiro))
+  print(paste("Se rechaza la hipotesis nula, entonces no existe normalidad con un p valor (p < 0.05): ", p_valor_shapiro, "\n"))
 }
 
 dev.off()
 
 # 2. Homocedasticidad (homogeneidad de varianzas)
-plot(modelo, which = 1)  # Gráfico de residuos vs. valores ajustados
-resultado_bartlett = bartlett.test(Respuesta ~ Tratamiento, data = datos)  # Prueba de Levene
-#ver que caso se usa el Bartlett ya que no se viola el principio de 
-#normalidad
+plot(modelo_dba, which = 1)  # Gráfico de residuos vs. valores ajustados
+resultado_bartlett = bartlett.test(Respuesta ~ Tratamiento, data = datos) 
+#ya que existe normalidad usamos el test de Bartlett
 
 p_valor_bartlett = resultado_bartlett$p.value
 
 if(p_valor_bartlett >= 0.05){
-  print(paste("Se cumple el supuesto de homocedasticidad con un p valor (p >= 0.05): ", p_valor_bartlett))
+  cat("Se cumple el supuesto de homocedasticidad con un p valor (p >= 0.05): ", p_valor_bartlett)
 } else {
-  print(paste("No se cumple el supuesto de homocedasticidad con un p valor de: ", p_valor_bartlett))
+  cat("No se cumple el supuesto de homocedasticidad con un p valor de: ", p_valor_bartlett)
 }
 
 # 3. Independencia
 # Debe existe un patron aleatorio
-plot(1:length(Respuesta),residuals(modelo),pch=9)
+plot(1:length(Respuesta),residuals(modelo_dba),pch=9)
 
 # Diagnóstico general
 #par(mfrow = c(2, 2))  # Dividir la ventana gráfica en 4 paneles
@@ -103,3 +142,12 @@ plot(1:length(Respuesta),residuals(modelo),pch=9)
 
 # Interpretación de los resultados
 # Analizar los gráficos y las pruebas estadísticas para determinar si los supuestos se cumplen o no
+
+#EFICIENCIA
+#calculo de eficiencia del modelo de bloques
+
+var_error_DBA = deviance(modelo_dba)/df.residual(modelo_dba)
+var_error_DCA = deviance(modelo)/df.residual(modelo)
+
+eficiencia_nueva = var_error_DCA/var_error_DBA
+eficiencia_nueva #si hay una mejor eficiencia del BDA vs DCA
