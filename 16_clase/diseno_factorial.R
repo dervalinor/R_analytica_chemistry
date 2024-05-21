@@ -114,3 +114,8 @@ ggplot(datos_resumen, aes(x = concentraciones, y = media, group = razas, colour 
       geom_line(size = 0.8) + 
       scale_color_brewer(palette = "Set 1")
       
+#modificar esto
+ggplot(datos_resumen,aes(x=con,y=media,group=razas,colour=razas))+
+  geom_line(size=0.8)+
+  scale_color_brewer(palette="set1")
+ggplot(datarazas,aes(x=interaction(con,razas),y=respuestas))+geom_boxplot()

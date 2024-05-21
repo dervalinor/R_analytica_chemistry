@@ -30,19 +30,22 @@ R4 <- c(0.60, 0.95, 0.91, 0.95, 0.70)
 R5 <- c(0.92, 0.82, 1.04, 1.13, 1.03)
 R6 <- c(0.63, 0.93, 1.02, 0.96, 0.63)
 R7 <- c(0.84, 0.74, 0.98, 0.98, 1.00)
-R8 <- c(0.96, 1.21, 1.27, 1.20, 1.06)
+R8 <- c(0.96, 1.24, 1.27, 1.20, 1.06)
 R9 <- c(1.01, 1.23, 1.30, 1.25, 1.24)
-R10 <- c(0.95, 1.20, 1.18, 1.23, 1.05)
+R10 <- c(0.95, 1.20, 1.18,1.23, 1.05)
 
 #tratamientos
 
 Tratamientos_rt = rep(c("T1", "T2", "T3", "T4", "T5"), 10)
+length(Tratamientos_rt)
 
 #creacion de bloque segun el tipo de rata
 Bloques_rt = rep(c("b1", "b2", "b3", "b4", 
                    "b5", "b6", "b7", "b8", "b9", "b10"), each = 5)
+length(Bloques_rt)
 
 Respuestas_rt = c(R1, R2, R3, R4, R5, R6, R7, R8, R9, R10)
+length(Respuestas_rt)
 
 #Marco de trabajo
 
@@ -95,6 +98,17 @@ if(p_valor_DBA >= 0.05){
 #Quitar el segundo p valor
 
 #Hacer un diagnostico de normalidad, homocedastcidad y independencia !!!!!
+
+#Primero encontramos los valores de calcula el cuadrado medio del error (Mean Square Error, MSE) para el Diseño Compuesto Aumentado (DCA), denotado por σ^2_DCA.
+#Esta fórmula se compone de dos sumandos:
+  
+#SCB (Suma de Cuadrados de Bloques): Esta suma se obtiene del análisis de varianza (ANOVA) del Diseño de Bloques al Azar (DBA), que es un componente del DCA.
+#SCE (Suma de Cuadrados del Error): También se obtiene del ANOVA del DBA.
+
+#Estos dos componentes se suman y se dividen por k(b-1), donde:
+  
+#k es el número de bloques del DBA
+#b es el número de unidades experimentales por bloque
 
 #Efectividad relativa: cuando efectivo es DCA vs DBA
 #Esto se hace a partir de error experimental
@@ -155,7 +169,7 @@ Eficiencia
 #para obtener resultados igual de validos que el DBA.
 
 
-Porcentaje_reduccion = (Mean_sq_CBA - Mean_sq_DCA )*100/Mean_sq_DCA 
+Porcentaje_reduccion = (Mean_sq_DBA- Mean_sq_DCA )*100/Mean_sq_DCA 
 #reduccion al 80% del 
 #error
 Porcentaje_reduccion
@@ -203,7 +217,69 @@ Tukey1df(datos_ratas) #la hipotesis nula no se puede rechazar,
 #otra forma de hacer la prueba de aditividad
 
 #install.packages("asbio")- Solucionar error !!!!!
-library(asbio)
-tukey.add.test(datos_ratas) #prueba de adividad
+#library(asbio)
+#tukey.add.test(datos_ratas) #prueba de adividad
 
 #otra forma de hacer la prueba de aditividad
+
+
+#Yo: intentando otra forma de calcular la eficiencia
+
+var_error_DBA = deviance(modelo_rt)/df.residual(modelo_rt)
+var_error_DCA = deviance(modelo_DCA_rt)/df.residual(modelo_DCA_rt)
+
+eficiencia_nueva = var_error_DCA/var_error_DBA
+eficiencia_nueva #Si funcionaaaa!!!!!!
+
+
+#Comparando con lo que aparece en la diapositiva del profesor
+#Ahora vemos la formula que nos enseño el profesor en clase.
+
+
+#calcula el cuadrado medio del error (Mean Square Error, MSE) para el Diseño Compuesto Aumentado (DCA), denotado por σ^2_DCA.
+#Esta fórmula se compone de dos sumandos:
+
+#SCB (Suma de Cuadrados de Bloques): Esta suma se obtiene del análisis de varianza (ANOVA) del Diseño de Bloques al Azar (DBA), que es un componente del DCA.
+#SCE (Suma de Cuadrados del Error): También se obtiene del ANOVA del DBA.
+
+#Estos dos componentes se suman y se dividen por k(b-1), donde:
+
+#b es el número de bloques del DBA
+#k es el número de unidades experimentales por bloque
+
+#Obtener valores del anova de DBA
+
+#suma de cuadrdos de bloques
+resumen_aov_DBA
+SCB = resumen_aov_DBA[[1]][["Sum Sq"]][2]
+SCB
+
+#Suma de cuadrados del Error
+SCE = resumen_aov_DBA[[1]][["Sum Sq"]][3]
+SCE
+
+#Numero de bloques
+#length(unique(datos$bloques))  # Número de unidades experimentales por bloque
+b = length(unique(datos_ratas$Bloques_rt))
+b
+
+#Numero de unidades experimentales de cada bloque
+grados_li = resumen_aov_DBA[[1]][["Df"]][1]
+k = grados_li + 1
+k
+
+sigma2_DBA <- (SCB + SCE) / (k * (b - 1))
+sigma2_DBA #si es correcto !!!!!
+
+#aunque tambien se puede hacer
+resument_aov_DCA
+sigma2_DBA = resument_aov_DCA[[1]][["Mean Sq"]][2]
+sigma2_DBA
+
+#calculo de cuadrados de DCA
+
+sigma2_DCA = resumen_aov_DBA[[1]][["Mean Sq"]][3]
+sigma2_DCA #si es correcto!!!!
+
+Eficiency = ((Df_DBA+1)*(Df_DCA+3)*sigma2_DBA)/((Df_DBA+3)*(Df_DCA+1)*sigma2_DCA)
+Eficiency
