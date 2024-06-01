@@ -88,6 +88,8 @@
 #  #|225              | 75                      | 72        |
 #  #|200              | 60                      | 66        |  (Center point)
 
+#Problem: Find the maximum performance based on temperature and reaction time
+
 # Install and load necessary packages
 #install.packages("rsm")
 library(rsm)
@@ -111,3 +113,25 @@ par(mfrow = c(1, 2)) # set up the plotting area
 contour(model, ~ Temperature + Time, image = TRUE, main = "Contour Plot")
 persp(model, ~ Temperature + Time, col = "lightblue", theta = 30, 
       phi = 30, main = "3D Surface Plot")
+
+#To find the maximum performance (yield) based on temperature and reaction 
+#time using the fitted quadratic model, we can utilize optimization techniques 
+#provided by the rsm package. Specifically, we'll use the canonical function, 
+#which finds the stationary point and determines whether 
+#it is a maximum, minimum, or saddle point.
+
+# Find the stationary point (optimal conditions)
+canonical_form <- canonical(model)
+
+# Display the canonical form details
+print(canonical_form)
+
+# Extract and display the optimal conditions
+optimal_conditions <- canonical_form$xs
+optimal_conditions
+
+# Predict the maximum yield at the optimal conditions
+max_yield <- predict(model, 
+                     newdata = data.frame(Temperature = optimal_conditions[1], 
+                                                 Time = optimal_conditions[2]))
+max_yield
