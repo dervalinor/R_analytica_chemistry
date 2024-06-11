@@ -1,0 +1,1 @@
+#Caso de 2³ determinar interacciones 
