@@ -283,3 +283,4 @@ sigma2_DCA #si es correcto!!!!
 
 Eficiency = ((Df_DBA+1)*(Df_DCA+3)*sigma2_DBA)/((Df_DBA+3)*(Df_DCA+1)*sigma2_DCA)
 Eficiency
+

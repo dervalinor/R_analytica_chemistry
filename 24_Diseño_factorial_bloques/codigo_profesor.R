@@ -1,3 +1,47 @@
+library(car)
+library(agricolae)
+library(gmodels)
+library(mvtnorm)
+library(multcomp)
+library(survival)
+library(ggplot2)
+
+#Para prueba de aditividad
+library(daewr)
+
+#El bloque es mas efectivo en un diseño factorial
+
+#Ejemplo: 
+#Un experimento fue realizado para determinar si el BHA (Un antioxidante comun)
+#usado en los alimento procesados inducia la actividad de la enzima hepatica 
+#EROD en ratones y si esta actividad era independiente de la cepa de los ratones
+
+#Este experimento fue parte de un estudio mas amplio para determinar si los 
+#antioxidantes ayudan a proteger contra el cancer.
+
+#Los factores de este experimento fueron:
+
+#A: Factor que permite identificar si un raton fue tratado con BHA o no. Otro 
+#factor de interes que denominaremos B fue la cepa del raton un ensayo de este
+#experimento consistia en seleccionar un raton de una cepa especifica luego 
+#incoorporar BHA (por un periodo de tres semanas o no dependiendo de lo que fue
+#especificado) y finalmente sacrificar el raton y realizar un autosia para 
+#determinar el nivel de actividad de la enzima EROD en el higado.
+
+#Dado que los resultados de los experimentos como este pueden variar sustancial-
+#mente en diferentes momentos y en el mismo laboratorio debido a diferencias en
+#los reactivos usados para el analisis de enzima la calibracion de intrumentos 
+#y factores ambientales en la cria de los animales, los experimentos fueron 
+#bloqueados en el tiempo. Se seleccionaron 2 rotones de cada de cuatro cepas, 
+#uno fue elegido al azar para recibir BHA en la dieta y se realizaron 8 ensayos
+#simultaneamente eston representa un bloque. Dado que existen dos niveles del 
+#fator A y 4 niveles de factor cepa, existieron 8 unidades experimentales por
+#los resultodos del experimento se muestran a continuacion:
+
+#datos
+
+#Importante bloquear en el laboratorio para evitar ese error
+
 BHA = rep(c("Tratado 1", "Control"), 8)
 Bloques = rep(rep(c("b1", "b2"), each = 2), 4)
 cepa = rep(c("c1", "c2", "c3", "c4"), each = 4)
@@ -23,6 +67,8 @@ modelo = aov(respuesta ~ BHA*cepa + Bloques, data = datos)
 summary(modelo)
 
 #Evaluacion de supuestos:
+
+#Convertir graficas a ggplot2
 
 #Normalidad
 
@@ -67,10 +113,43 @@ if(p_valor_b >= 0.05){
 }
 
 #Independencia (Supuesto)
-plot(1:length(actividad),residualesd,pch=8) 
+plot(1:length(respuesta),residualesd,pch=8) 
 
-#Hacer pruebas de aditividad 
+#Evalucion de aditividad
+#intentar hacer anova de interaccion entre BHA*Bloques
 
-#Hacer el anova sin bloques para evaluar si fue buena idea los bloques
-#evaluar efectividad
+# Evaluation of additivity using interaction terms
+# Ensure the data frame is in the correct format for linear model analysis
+datos_ad = data.frame(respuesta, BHA = factor(BHA), Bloques = factor(Bloques), cepa = factor(cepa))
 
+# Fit a linear model with interaction terms
+modelo_interaccion = aov(respuesta ~ BHA * Bloques, data = datos_ad)
+
+# Perform ANOVA to evaluate interaction terms
+anova_interaccion = anova(modelo_interaccion)
+anova_interaccion
+
+# Extract p-value for interaction term
+p_valor_interaccion = anova_interaccion["BHA:Bloques", "Pr(>F)"]
+
+cat("Resultados de la prueba de aditividad: \n")
+
+if(p_valor_interaccion >= 0.05) {
+  cat("No hay interacción significativa entre los tratamientos y las bloques. La aditividad se mantiene.\n")
+} else {
+  cat("Hay interacción significativa entre los tratamientos y las bloques. La aditividad no se mantiene.\n")
+}
+
+#Ver como esto se relaciona con el p valor - ESTO SE VE EN LA EFECTVIDAD !!!
+
+#The significant F value for the blocks 
+#indicate that including blocks in the design was a good decision. 
+#This significance means that the variability due to blocks is non-negligible 
+#and accounting for it improves the model's ability to explain 
+#the variability in the response variable.
+
+#By including blocks, you effectively reduce the residual error and 
+#increase the power of the statistical tests for the factors of interest 
+#(BHA and cepa). In summary, the analysis supports the conclusion that 
+#blocking has helped in controlling variability and should be considered 
+#a beneficial aspect of the experimental design.
