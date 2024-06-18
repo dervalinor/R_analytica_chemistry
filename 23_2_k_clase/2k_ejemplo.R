@@ -5,6 +5,8 @@
 #considered the easiest to perform because it involves n factors, 
 #each with only two levels (e.g., high/low, on/off, present/absent). 
 
+#Diseño de experimentos 2^k donde k = 2 es decir 2²
+
 #considere la investigación del efecto de la concentración del
 #reactivo y de la cantidad del catalizador sobre la conversión (rendimiento) 
 #de un proceso quı́mico. Sea la concentración del reactivo en
